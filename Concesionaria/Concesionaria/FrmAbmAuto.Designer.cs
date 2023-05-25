@@ -77,6 +77,7 @@
             this.txt_Patente = new System.Windows.Forms.TextBox();
             this.lblPatente = new System.Windows.Forms.Label();
             this.btnAgregarCiudad = new System.Windows.Forms.Button();
+            this.ChkAltaStock = new System.Windows.Forms.CheckBox();
             this.BarraBotones.SuspendLayout();
             this.Grupo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Imagen)).BeginInit();
@@ -185,6 +186,7 @@
             // 
             // Grupo
             // 
+            this.Grupo.Controls.Add(this.ChkAltaStock);
             this.Grupo.Controls.Add(this.btnSubirImagen);
             this.Grupo.Controls.Add(this.txt_RutaImagen);
             this.Grupo.Controls.Add(this.label13);
@@ -232,17 +234,18 @@
             // 
             // btnSubirImagen
             // 
-            this.btnSubirImagen.Location = new System.Drawing.Point(364, 258);
+            this.btnSubirImagen.Location = new System.Drawing.Point(364, 306);
             this.btnSubirImagen.Name = "btnSubirImagen";
             this.btnSubirImagen.Size = new System.Drawing.Size(75, 34);
             this.btnSubirImagen.TabIndex = 55;
             this.btnSubirImagen.Text = "Abrir";
             this.btnSubirImagen.UseVisualStyleBackColor = true;
+            this.btnSubirImagen.Visible = false;
             this.btnSubirImagen.Click += new System.EventHandler(this.btnSubirImagen_Click);
             // 
             // txt_RutaImagen
             // 
-            this.txt_RutaImagen.Location = new System.Drawing.Point(500, 279);
+            this.txt_RutaImagen.Location = new System.Drawing.Point(500, 318);
             this.txt_RutaImagen.Name = "txt_RutaImagen";
             this.txt_RutaImagen.Size = new System.Drawing.Size(132, 22);
             this.txt_RutaImagen.TabIndex = 54;
@@ -256,6 +259,7 @@
             this.label13.Size = new System.Drawing.Size(53, 16);
             this.label13.TabIndex = 53;
             this.label13.Text = "Imagen";
+            this.label13.Visible = false;
             // 
             // Imagen
             // 
@@ -265,6 +269,7 @@
             this.Imagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Imagen.TabIndex = 52;
             this.Imagen.TabStop = false;
+            this.Imagen.Visible = false;
             // 
             // cmb_CodSucursal
             // 
@@ -557,6 +562,16 @@
             this.btnAgregarCiudad.TabIndex = 17;
             this.btnAgregarCiudad.UseVisualStyleBackColor = true;
             // 
+            // ChkAltaStock
+            // 
+            this.ChkAltaStock.AutoSize = true;
+            this.ChkAltaStock.Location = new System.Drawing.Point(500, 261);
+            this.ChkAltaStock.Name = "ChkAltaStock";
+            this.ChkAltaStock.Size = new System.Drawing.Size(87, 20);
+            this.ChkAltaStock.TabIndex = 57;
+            this.ChkAltaStock.Text = "Alta Stock";
+            this.ChkAltaStock.UseVisualStyleBackColor = true;
+            // 
             // FrmAbmAuto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -632,5 +647,6 @@
         private System.Windows.Forms.PictureBox Imagen;
         private System.Windows.Forms.TextBox txt_RutaImagen;
         private System.Windows.Forms.Button btnSubirImagen;
+        private System.Windows.Forms.CheckBox ChkAltaStock;
     }
 }

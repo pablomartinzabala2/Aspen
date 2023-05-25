@@ -384,9 +384,35 @@ namespace Concesionaria
                 UbicaAuto(); 
 
                 if (txtCodAuto.Text == "")
+                {
                     fun.GuardarNuevoGenerico(this, "Auto");
+                    if (ChkAltaStock.Checked == true)
+                    {
+                        DateTime fecha = DateTime.Now;
+                        cAuto auto = new Clases.cAuto();
+                        cStockAuto stock = new cStockAuto();
+
+                        Int32 CodAuto = auto.GetMaxCodAuto();
+                        stock.InsertarStockAuto(CodAuto, fecha.ToShortDateString(), null, Principal.CodUsuarioLogueado, null);
+                    }
+                }
+                   
                 else
+                {
                     fun.ModificarGenerico(this, "Auto", "CodAuto", txtCodAuto.Text);
+                    if (ChkAltaStock.Checked == true)
+                    {
+                        Int32 CodAuto = Convert.ToInt32(txtCodAuto.Text);
+                        Int32 CodStock = 0;
+                        DateTime fecha = DateTime.Now;
+                        cAuto auto = new Clases.cAuto();
+                        cStockAuto stock = new cStockAuto();
+                        CodStock = stock.GetMaxCodStockxAutoVigente(CodAuto);
+                        if (CodStock == 0)
+                            stock.InsertarStockAuto(CodAuto, fecha.ToShortDateString(), null, Principal.CodUsuarioLogueado, null);
+                    }
+                }
+                   
                 MessageBox.Show("Datos grabados Correctamente", Clases.cMensaje.Mensaje());
                 Botonera(1);
                 fun.LimpiarGenerico(this);
