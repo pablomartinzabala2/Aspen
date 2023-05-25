@@ -56,10 +56,12 @@ namespace Concesionaria
             //  fun.LlenarCombo(cmbCiudad, "Ciudad", "Nombre", "CodCiudad");
             if (cmbCiudad.Items.Count > 0)
                 cmbCiudad.SelectedValue = 1;
-            fun.LlenarCombo(cmbDocumento, "TipoDocumento", "Nombre", "CodTipoDoc");
-            if (cmbDocumento.Items.Count > 0)
-                cmbDocumento.SelectedIndex = 1;
-            cmbDocumento.Enabled = false;
+            string sqlDoc = "select * from TipoDocumento order by CodTipoDoc";
+            DataTable tbDoc = cDb.ExecuteDataTable(sqlDoc);
+            fun.LlenarComboDatatable(cmbDocumento, tbDoc, "Nombre", "CodTipoDoc");
+          //  if (cmbDocumento.Items.Count > 0)
+           //     cmbDocumento.SelectedIndex = 1;
+            
             // fun.LlenarCombo(CmbBarrio, "Barrio", "Nombre", "CodBarrio");
             //fun.LlenarCombo(CmbCategoriaGasto, "CategoriaGasto", "Nombre", "CodCategoriaGasto");
             fun.LlenarCombo(CmbGastoRecepcion, "CategoriaGasto", "Nombre", "CodCategoriaGasto");
@@ -69,6 +71,7 @@ namespace Concesionaria
             fun.LlenarCombo(cmbSucursal, "Sucursal", "Nombre", "CodSucursal");
             fun.LlenarCombo(cmbProvincia, "Provincia", "Nombre", "CodProvincia");
             fun.LlenarCombo(cmbProvincia2, "Provincia", "Nombre", "CodProvincia");
+            fun.LlenarCombo(cmbColor, "Color", "Nombre", "CodColor");
             cPapeles papel = new cPapeles();
             DataTable tbPapeles = papel.GetPapeles();
             Lista.DataSource = tbPapeles;
@@ -84,6 +87,11 @@ namespace Concesionaria
             tbListaPapeles.Columns.Add("FechaVencimiento");
             string ColCliente = "CodCliente;Apellido;Nombre;Nrodocumento;Telefono";
             tbCliente = fun.CrearTabla(ColCliente);
+            DateTime Fecha = dpFecha.Value;
+            txtFecha.Text = Fecha.ToShortDateString();
+            string sql = "select * from anio order by Nombre desc";
+            DataTable tbAnio = cDb.ExecuteDataTable(sql);
+            fun.LlenarComboDatatable(cmbAnio, tbAnio, "Nombre", "CodAnio");
         }
 
         private void GrabarAutos(SqlConnection con, SqlTransaction Transaccion)
@@ -106,6 +114,7 @@ namespace Concesionaria
             Int32? CodTipoUtilitario = null;
             Int32? CodSucursal = null;
             string RutaImagen = "";
+            int? CodAnio = null;
 
             Patente = txtPatente.Text;
             Color = txtColor.Text;
@@ -113,7 +122,7 @@ namespace Concesionaria
                 CodCiudad = Convert.ToInt32(cmbCiudad.SelectedValue);
 
             Descripcion = txtDescripcion.Text;
-            Anio = txtAnio.Text;
+            
             if (txtKilometros.Text != "")
                 Kilometros = Convert.ToInt32(txtKilometros.Text.Replace(".", ""));
             if (cmb_CodMarca.SelectedIndex > 0)
@@ -140,6 +149,7 @@ namespace Concesionaria
             Motor = txtMotor.Text;
             Chasis = txtChasis.Text;
             Int32? CodTipoCombustible = null;
+            int? CodColor = null;
             if (CmbTipoCombustible.SelectedIndex > 0)
                 CodTipoCombustible = Convert.ToInt32(CmbTipoCombustible.SelectedValue);
 
@@ -150,6 +160,11 @@ namespace Concesionaria
                 CodTipoUtilitario = Convert.ToInt32(cmbTipoUtilitario.SelectedValue);
             if (txtRuta.Text != "")
                 RutaImagen = txtRuta.Text;
+            if (cmbColor.SelectedIndex > 0)
+                CodColor = Convert.ToInt32(cmbColor.SelectedValue);
+
+            if (cmbAnio.SelectedIndex > 0)
+                CodAnio = Convert.ToInt32(cmbAnio.SelectedValue);
 
             Clases.cAuto auto = new Clases.cAuto();
             Boolean Graba = true;
@@ -159,7 +174,7 @@ namespace Concesionaria
             {
                 //inserto el auto
                 auto.AgregarAutoTransaccion(con, Transaccion, Patente, CodMarca, Descripcion,
-                    Kilometros, CodCiudad, Propio, Concesion, Observacion, Anio, Importe, Motor, Chasis, Color, CodTipoCombustible, CodSucursal, CodTipoUtilitario, RutaImagen);
+                    Kilometros, CodCiudad, Propio, Concesion, Observacion, Anio, Importe, Motor, Chasis, Color, CodTipoCombustible, CodSucursal, CodTipoUtilitario, RutaImagen,CodColor,CodAnio);
                 CodAuto = auto.GetMaxCodAutoTransaccion(con, Transaccion);
                 txtCodAuto.Text = CodAuto.ToString();
 
@@ -168,7 +183,7 @@ namespace Concesionaria
             else
             {
                 auto.ModificarAutoTransaccion(con, Transaccion, Patente, CodMarca, Descripcion,
-                    Kilometros, CodCiudad, Propio, Concesion, Observacion, Anio, Importe, Motor, Chasis, Color, CodSucursal, CodTipoUtilitario, RutaImagen);
+                    Kilometros, CodCiudad, Propio, Concesion, Observacion, Anio, Importe, Motor, Chasis, Color, CodSucursal, CodTipoUtilitario, RutaImagen,CodAnio);
             }
             if (txtCodStock.Text == "")
             {
@@ -189,6 +204,40 @@ namespace Concesionaria
                 //costo.InsertarCosto(CodAuto, Patente, Importe, Fecha, DescripcionCompra, CodStock);
             }
 
+        }
+
+
+        private void OcultarTipoDoc(int CodTipoDoc)
+        {
+            switch(CodTipoDoc)
+            {
+                case 1:
+                    lblApellido.Visible = true;
+                    txtApellido.Visible = true;
+                    lblNombre.Text = "Nombre";
+                    lblFecha.Text = "Fecha Nac-";
+                    lblGuion1.Visible = false;
+                    lblGuion2.Visible = false;
+                    break;
+                case 2:
+                    lblApellido.Visible = false;
+                    txtApellido.Visible = false;
+                    lblNombre.Text = "Razón Social";
+                    lblFecha.Text = "Fecha Inicio";
+                    lblGuion1.Visible = true;
+                    lblGuion2.Visible = true;
+                    break;
+                case 3:
+                    lblApellido.Visible = false;
+                    txtApellido.Visible = false;
+                    lblNombre.Text = "Razón Social";
+                    lblFecha.Text = "Fecha Inicio";
+                  
+                    lblGuion1.Visible = true;
+                    lblGuion2.Visible = true;
+                    break;
+
+            }
         }
 
         private void btnGrabar_Click(object sender, EventArgs e)
@@ -313,6 +362,10 @@ namespace Concesionaria
                     Int32? CodCliente = null;
                     if (txtCodCLiente.Text != "")
                         CodCliente = Convert.ToInt32(txtCodCLiente.Text);
+                    else
+                    {
+                        CodCliente = Convert.ToInt32(GrillaCliente.Rows[0].Cells[0].Value.ToString());
+                    }
                     double ImporteaPagar = fun.ToDouble(txtEfectivoaPagar.Text);
                     Clases.cEfectivoaPagar objEft = new Clases.cEfectivoaPagar();
                     objEft.Insertar(con, Transaccion, Convert.ToDateTime(txtFecha.Text), ImporteaPagar, CodCompra, CodCliente, CodAuto);
@@ -416,7 +469,6 @@ namespace Concesionaria
                 {
                     b = 1;
                     txtDescripcion.Text = trdo.Rows[0]["Descripcion"].ToString();
-                    txtAnio.Text = trdo.Rows[0]["Anio"].ToString();
                     txtKilometros.Text = trdo.Rows[0]["Kilometros"].ToString();
                     txtChasis.Text = trdo.Rows[0]["Chasis"].ToString();
                     txtColor.Text = trdo.Rows[0]["Color"].ToString();
@@ -525,7 +577,6 @@ namespace Concesionaria
             if (cmb_CodMarca.Items.Count > 0)
                 cmb_CodMarca.SelectedIndex = 0;
             txtDescripcion.Text = "";
-            txtAnio.Text = "";
             txtKilometros.Text = "";
             txtImporte.Text = "";
             txtChasis.Text = "";
@@ -635,6 +686,8 @@ namespace Concesionaria
 
             if (cmbProvincia2.Items.Count > 0)
                 cmbProvincia2.SelectedIndex = 0;
+
+         
         }
 
         private void btnAgregarCiudad_Click(object sender, EventArgs e)
@@ -694,6 +747,14 @@ namespace Concesionaria
                         fun.LlenarCombo(cmb_CodMarca, "Marca", "Nombre", "CodMarca");
                         cmb_CodMarca.SelectedValue = Principal.CampoIdSecundarioGenerado;
                         break;
+                    case "Banco":
+                        fun.LlenarCombo(CmbBanco, "Banco", "Nombre", "CodBanco");
+                        CmbBanco.SelectedValue = Principal.CampoIdSecundarioGenerado;
+                        break;
+                    case "Color":  
+                        fun.LlenarCombo(cmbColor, "Color", "Nombre", "CodColor");
+                        cmbColor.SelectedValue = Principal.CampoIdSecundarioGenerado;
+                        break;
                     case "Barrio":
                         Int32 CodCity = Convert.ToInt32(cmbCiudad2.SelectedValue);
                         Int32 CodBarrio = Convert.ToInt32(Principal.CampoIdSecundarioGenerado);
@@ -741,6 +802,12 @@ namespace Concesionaria
                         Lista.DisplayMember = "Nombre";
                         Lista.ValueMember = "CodPapel";
                         break;
+                    case "Anio":
+                        string sql = "select * from Anio order by Nombre desc";
+                        DataTable tbAnio = cDb.ExecuteDataTable(sql);
+                        fun.LlenarComboDatatable(cmbAnio, tbAnio, "Nombre", "CodAnio");
+                        cmbAnio.SelectedValue = Principal.CampoIdSecundarioGenerado;
+                        break;
 
                 }
             }
@@ -749,22 +816,11 @@ namespace Concesionaria
 
         private Boolean GuardarCliente(SqlConnection con, SqlTransaction Transaccion, Boolean Nuevo)
         {
-            /*  if (txtNroDoc.Text == "")
-              {
-                  MessageBox.Show("Debe ingresar un número de documento para continuar.", Clases.cMensaje.Mensaje());
-                  return false;
-              }
-             * */
+           
             cFunciones fun = new cFunciones();
             if (txtNombre.Text == "")
             {
                 MessageBox.Show("Debe ingresar un nombre de un nombre para continuar.", Clases.cMensaje.Mensaje());
-                return false;
-            }
-
-            if (txtApellido.Text == "")
-            {
-                MessageBox.Show("Debe ingresar un nombre de un apellido para continuar.", Clases.cMensaje.Mensaje());
                 return false;
             }
 
@@ -787,6 +843,8 @@ namespace Concesionaria
                 FechaNacimiento = Convert.ToDateTime(txtFechaNacimiento.Text);
             string Email = txtEmail.Text;
             string Observacion = txtObservacion.Text;
+
+           
 
             if (CmbBarrio.SelectedIndex > 0)
                 CodBarrio = Convert.ToInt32(CmbBarrio.SelectedValue);
@@ -879,9 +937,10 @@ namespace Concesionaria
         }
 
         private void txtNroDoc_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        { /*
             Clases.cFunciones fun = new Clases.cFunciones();
             e.Handled = fun.SoloNumerosEnteros(e);
+            */
         }
 
         private void btnAgregarCategoriaGasto_Click(object sender, EventArgs e)
@@ -1155,6 +1214,7 @@ namespace Concesionaria
             txtTotalGasto.Text = txtTotalGastosRecepcion.Text;
             txtTotalGastosRecepcion.Text = txtTotalGasto.Text;
             CalcularTotalCompra();
+            CalcularSubtotal();
         }
 
         private void AgregarGastoRecepcion(string Codigo, string Descripcion, string Importe, string Tipo)
@@ -1243,7 +1303,10 @@ namespace Concesionaria
             if (txtTotalGastosRecepcion.Text != "")
             {
                 txtTotalGastosRecepcion.Text = fun.FormatoEnteroMiles(txtTotalGastosRecepcion.Text);
+                txtTotalGasto.Text = txtTotalGastosRecepcion.Text;
             }
+            CalcularTotalCompra();
+            CalcularSubtotal();
         }
 
         private void txtImporteGastoRecepcion_KeyPress(object sender, KeyPressEventArgs e)
@@ -1342,6 +1405,7 @@ namespace Concesionaria
             Clases.cFunciones fun = new Clases.cFunciones();
             txtEfectivo.Text = fun.FormatoEnteroMiles(txtEfectivo.Text);
             txtTotalEfectivo.Text = txtEfectivo.Text;
+            CalcularSubtotal();
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -1385,6 +1449,7 @@ namespace Concesionaria
             Clases.cFunciones fun = new Clases.cFunciones();
             txtImporteVehiculo2.Text = fun.FormatoEnteroMiles(txtImporteVehiculo2.Text);
             txtTotalVehiculo.Text = txtImporteVehiculo2.Text;
+            CalcularSubtotal();
         }
 
         private void BtnAgregarCheque_Click(object sender, EventArgs e)
@@ -1407,7 +1472,7 @@ namespace Concesionaria
                 return;
             }
             Clases.cFunciones fun = new Clases.cFunciones();
-            if (fun.ValidarFecha(txtFechaVencimiento.Text) == false)
+            if (fun.ValidarFecha(dpFechaVencimiento.Value.ToShortDateString()) == false)
             {
                 MessageBox.Show("Debe ingresr una fecha de vencimiento para continuar", Clases.cMensaje.Mensaje());
                 return;
@@ -1441,7 +1506,7 @@ namespace Concesionaria
             DataRow r1 = tbCheques.NewRow();
             r1[0] = txtCheque.Text;
             r1[1] = txtImporteCheque.Text;
-            r1[2] = txtFechaVencimiento.Text;
+            r1[2] = dpFechaVencimiento.Value.ToShortDateString();
             r1[3] = CmbBanco.SelectedValue;
             r1[4] = banco;
             tbCheques.Rows.Add(r1);
@@ -1452,7 +1517,7 @@ namespace Concesionaria
             GrillaCheques.Columns[4].Width = 410;
             txtImporteCheque.Text = "";
             txtCheque.Text = "";
-            txtFechaVencimiento.Text = "";
+         
             double TotalCheques = 0;
             for (i = 0; i < tbCheques.Rows.Count; i++)
             {
@@ -1461,6 +1526,7 @@ namespace Concesionaria
             txtTotalCheque.Text = TotalCheques.ToString();
             //Clases.cFunciones fun = new Clases.cFunciones();
             txtTotalCheque.Text = fun.FormatoEnteroMiles(txtTotalCheque.Text);
+            CalcularSubtotal();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -1515,7 +1581,7 @@ namespace Concesionaria
             txtTotalCheque.Text = TotalCheques.ToString();
             //Clases.cFunciones fun = new Clases.cFunciones();
             txtTotalCheque.Text = fun.FormatoEnteroMiles(txtTotalCheque.Text);
-
+            CalcularSubtotal();
         }
 
         private void GrabarCheques(SqlConnection con, SqlTransaction Transaccion, Int32 CodCompra)
@@ -1721,6 +1787,7 @@ namespace Concesionaria
             Clases.cFunciones fun = new Clases.cFunciones();
             txtEfectivoaPagar.Text = fun.FormatoEnteroMiles(txtEfectivoaPagar.Text);
             txtTotalEfectivosaPagar.Text = txtEfectivoaPagar.Text;
+            CalcularSubtotal();
         }
 
         private void bnAgregarGastosRecepcion_Click_1(object sender, EventArgs e)
@@ -1787,10 +1854,10 @@ namespace Concesionaria
         }
 
         private void btnNuevaSucursal_Click(object sender, EventArgs e)
-        {
-            Principal.CampoIdSecundario = "CodSucursal";
+        {  //se cambio por color
+            Principal.CampoIdSecundario = "CodColor";
             Principal.CampoNombreSecundario = "Nombre";
-            Principal.NombreTablaSecundario = "Sucursal";
+            Principal.NombreTablaSecundario = "Color";
             FrmAltaBasica form = new FrmAltaBasica();
             form.FormClosing += new FormClosingEventHandler(form_FormClosing);
             form.ShowDialog();
@@ -1934,6 +2001,15 @@ namespace Concesionaria
                     BuscarGasto(CodStockEntrada);
                 }
 
+                if (trdo.Rows[0]["Fecha"].ToString ()!="")
+                {
+                    DateTime Fecha = Convert.ToDateTime(trdo.Rows[0]["Fecha"].ToString());
+                    txtFecha.Text = Fecha.ToShortDateString();
+                    dpFecha.Text = txtFecha.Text;
+                }
+
+               // BuscarChequexCompra(CodCompra);
+
                 if (trdo.Rows[0]["CodStockSalida"].ToString() != "")
                 {
                     Int32 CodStockSalida = Convert.ToInt32(trdo.Rows[0]["CodStockSalida"].ToString());
@@ -1952,8 +2028,17 @@ namespace Concesionaria
                         txtCostoxAuto.Text = fun.FormatoEnteroMiles(txtCostoxAuto.Text);
                     }
                 }
-
+                CalcularSubtotal();
             }
+        }
+
+        private void BuscarChequexCompra(Int32 CodCompra)
+        {
+            cChequesaPagar cheque = new cChequesaPagar();
+            DataTable trdo = cheque.GetChequesxCodCompra2(CodCompra);
+            cFunciones fun = new cFunciones();
+            GrillaCheques.DataSource = trdo;
+            fun.AnchoColumnas(GrillaCheques, "20;20;20;20;20");
         }
 
         private void BuscarGasto(Int32 CodStock)
@@ -2035,22 +2120,23 @@ namespace Concesionaria
 
         private void BuscarStockxCodStock(Int32 CodStock)
         {
-            string Patente = "";
+            Int32 CodAuto = 0;
             cStockAuto objStock = new cStockAuto();
             DataTable tbStock = objStock.GetStockxCodigo(CodStock);
             if (tbStock.Rows.Count >0)
             {
-                Patente = tbStock.Rows[0]["Patente"].ToString(); 
+                if (tbStock.Rows[0]["CodAuto"].ToString ()!="")
+                    CodAuto = Convert.ToInt32(tbStock.Rows[0]["CodAuto"]); 
             }
             
-            if (Patente.Length > 5)
+            if (CodAuto  > 0)
             {
                 Clases.cAuto auto = new Clases.cAuto();
-                DataTable trdo = auto.GetAutoxPatente(Patente);
+                DataTable trdo = auto.GetAutoxCodigoAuto(CodAuto);
                 if (trdo.Rows.Count > 0)
                 {
+                    txtPatente.Text = trdo.Rows[0]["Patente"].ToString();
                     txtDescripcion.Text = trdo.Rows[0]["Descripcion"].ToString();
-                    txtAnio.Text = trdo.Rows[0]["Anio"].ToString();
                     txtKilometros.Text = trdo.Rows[0]["Kilometros"].ToString();
                     txtChasis.Text = trdo.Rows[0]["Chasis"].ToString();
                     txtColor.Text = trdo.Rows[0]["Color"].ToString();
@@ -2061,6 +2147,11 @@ namespace Concesionaria
                         txtKilometros.Text = fun.FormatoEnteroMiles(txtKilometros.Text);
                     }
                     txtCodAuto.Text = trdo.Rows[0]["CodAuto"].ToString();
+
+                    if (trdo.Rows[0]["CodAnio"].ToString()!="")
+                    {
+                        cmbAnio.SelectedValue = trdo.Rows[0]["CodAnio"].ToString();
+                    }
 
                     if (trdo.Rows[0]["Importe"].ToString() != "")
                     {
@@ -2168,6 +2259,14 @@ namespace Concesionaria
             GrillaCheques.Columns[2].HeaderText = "Vencimiento";
             GrillaCheques.Columns[3].Visible = false;
             GrillaCheques.Columns[4].Width = 410;
+            GrillaCheques.DataSource = tbCheques;
+            GrillaCheques.Columns[0].HeaderText = "Cheque";
+            GrillaCheques.Columns[2].HeaderText = "Vencimiento";
+            GrillaCheques.Columns[3].Visible = false;
+            GrillaCheques.Columns[4].Width = 410;
+            txtImporteCheque.Text = "";
+            txtCheque.Text = "";
+            CalcularSubtotal();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -2325,25 +2424,37 @@ namespace Concesionaria
 
         private void btnAgregarCliente_Click(object sender, EventArgs e)
         {
+            if (cmbDocumento.SelectedIndex<1)
+            {
+                Mensaje("Debe seleccionar un tipo de documento para continuar");
+                return;
+            }
             if (txtNroDoc.Text =="")
             {
                 Mensaje("Debe ingresar un número de documento");
                 return;
             }
 
-            if (txtApellido.Text  == "")
-            {
-                Mensaje("Debe ingresar un apellido");
-                return;
-            }
-
+            
             if (txtNombre.Text  == "")
             {
                 Mensaje("Debe ingresar un nombre");
                 return;
             }
 
-            Int32 CodTipoDoc = 0;
+            int CodTipoDoc = Convert.ToInt32(cmbDocumento.SelectedValue); 
+
+            if (CodTipoDoc ==1)
+            {
+                if (txtApellido.Text == "")
+                {
+                    Mensaje("Debe ingresar un apellido para continuar");
+                    return;
+                }
+            }
+            
+
+       
             if (cmbDocumento.SelectedIndex > 0)
                 CodTipoDoc = Convert.ToInt32(cmbDocumento.SelectedValue);
             Clases.cCliente cliente = new Clases.cCliente();
@@ -2381,7 +2492,10 @@ namespace Concesionaria
                         tbCliente = fun.AgregarFilas(tbCliente, val);
                        
                         GrillaCliente.DataSource = tbCliente;
-                        fun.AnchoColumnas(GrillaCliente, "0;30;30;20;20");
+                        if (cmbDocumento.SelectedIndex < 2)
+                            fun.AnchoColumnas(GrillaCliente, "0;30;30;20;20");
+                        else
+                            fun.AnchoColumnas(GrillaCliente, "0;0;60;20;20");
                         GrillaCliente.Columns[0].Visible = false;
                     }
                     Transaccion.Commit();
@@ -2427,6 +2541,108 @@ namespace Concesionaria
             string Cod = GrillaCliente.CurrentRow.Cells[0].Value.ToString();
             tbCliente = fun.EliminarFila(tbCliente, "CodCliente", Cod);
             GrillaCliente.DataSource = tbCliente;
+        }
+
+        private void btnNuevaBanco_Click(object sender, EventArgs e)
+        {
+            Principal.CampoIdSecundario = "CodBanco";
+            Principal.CampoNombreSecundario = "Nombre";
+            Principal.NombreTablaSecundario = "Banco";
+            Principal.CodigoPrincipalAbm = "1";
+            FrmAltaBasica form = new FrmAltaBasica();
+            form.FormClosing += new FormClosingEventHandler(form_FormClosing);
+            form.ShowDialog();
+        }
+
+        private void txtImporte_TextChanged(object sender, EventArgs e)
+        {
+            Clases.cFunciones fun = new Clases.cFunciones();
+            txtImporte.Text = fun.FormatoEnteroMiles(txtImporte.Text);
+            txtImporte.SelectionStart = txtImporte.Text.Length;
+            txtTotal.Text = txtImporte.Text;
+            CalcularTotalCompra();
+        }
+
+        private void tabPage4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CalcularSubtotal()
+        {
+            cFunciones fun = new cFunciones();
+            Double Efectivo = 0;
+            Double Cheque = 0;
+            Double Vehiculo = 0;
+            Double EfectivoPagar = 0;
+            Double Gastos = 0;
+            Double Subtotal = 0;
+
+            if (txtEfectivo.Text != "")
+                Efectivo = fun.ToDouble(txtEfectivo.Text);
+            if (txtTotalCheque.Text != "")
+                Cheque = fun.ToDouble(txtTotalCheque.Text);
+            if (txtTotalVehiculo.Text != "")
+                Vehiculo = fun.ToDouble(txtTotalVehiculo.Text);
+            if (txtTotalEfectivosaPagar.Text != "")
+                EfectivoPagar = fun.ToDouble(txtTotalEfectivosaPagar.Text);
+         //   if (txtTotalGasto.Text != "")
+         //       Gastos = fun.ToDouble(txtTotalGasto.Text);
+
+            Subtotal = Efectivo + Cheque + Vehiculo + EfectivoPagar + Gastos;
+            TxtSubTotal.Text = Subtotal.ToString();
+            TxtSubTotal.Text = fun.FormatoEnteroMiles(TxtSubTotal.Text);
+        }
+
+        private void btnCancelarAuto_Click(object sender, EventArgs e)
+        {
+            txtPatente2.Text = "";
+            txtCodStock2.Text = "";
+            txtCodAuto2.Text = "";
+            txtDescripcion2.Text = "";
+            txtCostoxAuto.Text = "";
+            txtImporteVehiculo2.Text = "";
+            txtTotalVehiculo.Text = "";
+            CalcularSubtotal();
+        }
+
+        private void dpFecha_ValueChanged(object sender, EventArgs e)
+        {
+            DateTime Fecha = dpFecha.Value;
+            txtFecha.Text = Fecha.ToShortDateString();
+        }
+
+        private void btnAgregarAnio_Click(object sender, EventArgs e)
+        {
+            Principal.CampoIdSecundario = "CodAnio";
+            Principal.CampoNombreSecundario = "Nombre";
+            Principal.NombreTablaSecundario = "Anio";
+            Principal.CampoIdSecundarioGenerado = "";
+            FrmAltaBasica form = new FrmAltaBasica();
+            form.FormClosing += new FormClosingEventHandler(form_FormClosing);
+            form.ShowDialog();
+        }
+
+        private void cmbDocumento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbDocumento.SelectedIndex >0)
+            {
+                int CodTipoDoc = Convert.ToInt32(cmbDocumento.SelectedValue);
+                OcultarTipoDoc(CodTipoDoc);
+            }
+        }
+
+        private void btnBuscarCliente_Click(object sender, EventArgs e)
+        {
+            FrmBuscadorCliente frm = new FrmBuscadorCliente();
+            frm.FormClosing += new FormClosingEventHandler(FrmBuscarCliente);
+            frm.Show();
+        }
+
+        private void FrmBuscarCliente(object sender, FormClosingEventArgs e)
+        {
+            Int32 CodCliente = Convert.ToInt32(Principal.CodigoPrincipalAbm);
+            BuscarClientexCodigo(CodCliente);
         }
     }
 }

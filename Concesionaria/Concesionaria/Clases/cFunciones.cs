@@ -297,7 +297,7 @@ namespace Concesionaria.Clases
         public void GuardarNuevoGenerico(Control c, string Tabla)
         {
             string nombre = "";
-            string Campo = "";
+            
             string values = "";
             string  sql = "insert into " + Tabla;
             sql = sql + "(";
@@ -372,7 +372,7 @@ namespace Concesionaria.Clases
                                 if (Combo.SelectedIndex > 0)
                                     values = "Values("+ Combo.SelectedValue.ToString();
                                 else
-                                    values = "(null";
+                                    values = " Values(null";
                                 ban = 1;
                             }
                             else
@@ -399,8 +399,6 @@ namespace Concesionaria.Clases
         public void ModificarGenerico(Control c, string Tabla,string NombreClavePrimario,string ValorClavePrimaria)
         {
             string nombre = "";
-            string Campo = "";
-            string values = "";
             string sql = "Update " + Tabla;
             sql = sql + " set ";
             int ban = 0;
@@ -566,8 +564,6 @@ namespace Concesionaria.Clases
 
         public double CalcularTotalGrilla(DataGridView Grilla, string Campo)
         {
-             
-        
             string sImporte = "";
             Clases.cFunciones fun = new Clases.cFunciones();
             double Total = 0;
@@ -578,6 +574,7 @@ namespace Concesionaria.Clases
                 Total = Total + Convert.ToDouble (sImporte.Replace (".",""));
             }
             return Total;
+
         }
 
         public string  ParteEntera(string Nro)

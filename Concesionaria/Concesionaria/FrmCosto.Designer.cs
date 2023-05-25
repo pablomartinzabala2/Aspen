@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmbAnio = new System.Windows.Forms.ComboBox();
+            this.btnBuscarAuto = new System.Windows.Forms.Button();
             this.txtCodStock = new System.Windows.Forms.TextBox();
             this.txtImporte = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -39,7 +41,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtKms = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtAnio = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -62,7 +63,6 @@
             this.Grilla = new System.Windows.Forms.DataGridView();
             this.label8 = new System.Windows.Forms.Label();
             this.btnEliminar = new System.Windows.Forms.Button();
-            this.txtFecha = new System.Windows.Forms.MaskedTextBox();
             this.btnAgregarCosto = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.GrillaGastosRecepcion = new System.Windows.Forms.DataGridView();
@@ -73,6 +73,7 @@
             this.CmbGastoRecepcion = new System.Windows.Forms.ComboBox();
             this.label40 = new System.Windows.Forms.Label();
             this.btnAgregarGastodeRecepcion = new System.Windows.Forms.Button();
+            this.dpFecha = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -84,6 +85,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cmbAnio);
+            this.groupBox1.Controls.Add(this.btnBuscarAuto);
             this.groupBox1.Controls.Add(this.txtCodStock);
             this.groupBox1.Controls.Add(this.txtImporte);
             this.groupBox1.Controls.Add(this.label15);
@@ -94,7 +97,6 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.txtKms);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.txtAnio);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtDescripcion);
             this.groupBox1.Controls.Add(this.label2);
@@ -109,6 +111,25 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Información del vehículo";
+            // 
+            // cmbAnio
+            // 
+            this.cmbAnio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAnio.FormattingEnabled = true;
+            this.cmbAnio.Location = new System.Drawing.Point(143, 98);
+            this.cmbAnio.Name = "cmbAnio";
+            this.cmbAnio.Size = new System.Drawing.Size(56, 24);
+            this.cmbAnio.TabIndex = 69;
+            // 
+            // btnBuscarAuto
+            // 
+            this.btnBuscarAuto.Image = global::Concesionaria.Properties.Resources.carpeta;
+            this.btnBuscarAuto.Location = new System.Drawing.Point(276, 24);
+            this.btnBuscarAuto.Name = "btnBuscarAuto";
+            this.btnBuscarAuto.Size = new System.Drawing.Size(40, 27);
+            this.btnBuscarAuto.TabIndex = 65;
+            this.btnBuscarAuto.UseVisualStyleBackColor = true;
+            this.btnBuscarAuto.Click += new System.EventHandler(this.btnBuscarAuto_Click);
             // 
             // txtCodStock
             // 
@@ -204,14 +225,6 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Kms";
             // 
-            // txtAnio
-            // 
-            this.txtAnio.Enabled = false;
-            this.txtAnio.Location = new System.Drawing.Point(143, 95);
-            this.txtAnio.Name = "txtAnio";
-            this.txtAnio.Size = new System.Drawing.Size(100, 22);
-            this.txtAnio.TabIndex = 7;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -297,6 +310,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.tabPage1.Controls.Add(this.dpFecha);
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.txtTotalGeneral);
             this.tabPage1.Controls.Add(this.txtCosto);
@@ -309,7 +323,6 @@
             this.tabPage1.Controls.Add(this.Grilla);
             this.tabPage1.Controls.Add(this.label8);
             this.tabPage1.Controls.Add(this.btnEliminar);
-            this.tabPage1.Controls.Add(this.txtFecha);
             this.tabPage1.Controls.Add(this.btnAgregarCosto);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
@@ -427,15 +440,6 @@
             this.btnEliminar.UseVisualStyleBackColor = true;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
-            // txtFecha
-            // 
-            this.txtFecha.Location = new System.Drawing.Point(375, 13);
-            this.txtFecha.Mask = "00/00/0000";
-            this.txtFecha.Name = "txtFecha";
-            this.txtFecha.Size = new System.Drawing.Size(100, 22);
-            this.txtFecha.TabIndex = 21;
-            this.txtFecha.ValidatingType = typeof(System.DateTime);
-            // 
             // btnAgregarCosto
             // 
             this.btnAgregarCosto.Image = global::Concesionaria.Properties.Resources.add;
@@ -538,6 +542,14 @@
             this.btnAgregarGastodeRecepcion.UseVisualStyleBackColor = true;
             this.btnAgregarGastodeRecepcion.Click += new System.EventHandler(this.btnAgregarGastodeRecepcion_Click);
             // 
+            // dpFecha
+            // 
+            this.dpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dpFecha.Location = new System.Drawing.Point(390, 14);
+            this.dpFecha.Name = "dpFecha";
+            this.dpFecha.Size = new System.Drawing.Size(87, 22);
+            this.dpFecha.TabIndex = 71;
+            // 
             // FrmCosto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -578,7 +590,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtKms;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtAnio;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.Label label2;
@@ -587,7 +598,6 @@
         private System.Windows.Forms.TextBox txtPatente;
         private System.Windows.Forms.Label lblPatente;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.MaskedTextBox txtFecha;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtDescripcionCosto;
         private System.Windows.Forms.Label label7;
@@ -613,5 +623,8 @@
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Button btnAgregarGastodeRecepcion;
         private System.Windows.Forms.DataGridView GrillaGastosRecepcion;
+        private System.Windows.Forms.Button btnBuscarAuto;
+        private System.Windows.Forms.ComboBox cmbAnio;
+        private System.Windows.Forms.DateTimePicker dpFecha;
     }
 }

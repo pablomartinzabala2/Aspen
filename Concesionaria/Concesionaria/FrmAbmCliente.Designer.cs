@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAbmCliente));
             this.Grupo = new System.Windows.Forms.GroupBox();
+            this.txt_Observacion = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.Imagen = new System.Windows.Forms.PictureBox();
             this.txt_RutaImagen = new System.Windows.Forms.TextBox();
             this.btnSubirFotoCliente = new System.Windows.Forms.Button();
@@ -58,7 +60,7 @@
             this.cmb_CodTipoDoc = new System.Windows.Forms.ComboBox();
             this.txt_NroDocumento = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lblNombre = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.BarraBotones = new System.Windows.Forms.ToolStrip();
@@ -70,8 +72,6 @@
             this.btnAbrir = new System.Windows.Forms.ToolStripButton();
             this.btnImprimir = new System.Windows.Forms.ToolStripButton();
             this.btnSalir = new System.Windows.Forms.ToolStripButton();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txt_Observacion = new System.Windows.Forms.TextBox();
             this.Grupo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Imagen)).BeginInit();
             this.BarraBotones.SuspendLayout();
@@ -109,7 +109,7 @@
             this.Grupo.Controls.Add(this.cmb_CodTipoDoc);
             this.Grupo.Controls.Add(this.txt_NroDocumento);
             this.Grupo.Controls.Add(this.label9);
-            this.Grupo.Controls.Add(this.label8);
+            this.Grupo.Controls.Add(this.lblNombre);
             this.Grupo.Controls.Add(this.label7);
             this.Grupo.Controls.Add(this.label6);
             this.Grupo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -119,6 +119,23 @@
             this.Grupo.TabIndex = 4;
             this.Grupo.TabStop = false;
             this.Grupo.Text = "Información del Cliente";
+            // 
+            // txt_Observacion
+            // 
+            this.txt_Observacion.Location = new System.Drawing.Point(492, 214);
+            this.txt_Observacion.Multiline = true;
+            this.txt_Observacion.Name = "txt_Observacion";
+            this.txt_Observacion.Size = new System.Drawing.Size(246, 80);
+            this.txt_Observacion.TabIndex = 74;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(377, 214);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(103, 17);
+            this.label3.TabIndex = 73;
+            this.label3.Text = "Observaciones";
             // 
             // Imagen
             // 
@@ -225,7 +242,6 @@
             // txtM_Celular
             // 
             this.txtM_Celular.Location = new System.Drawing.Point(489, 87);
-            this.txtM_Celular.Mask = "000-000-000000";
             this.txtM_Celular.Name = "txtM_Celular";
             this.txtM_Celular.Size = new System.Drawing.Size(249, 23);
             this.txtM_Celular.TabIndex = 30;
@@ -233,7 +249,6 @@
             // txtM_Telefono
             // 
             this.txtM_Telefono.Location = new System.Drawing.Point(121, 84);
-            this.txtM_Telefono.Mask = "(999)0000-0000";
             this.txtM_Telefono.Name = "txtM_Telefono";
             this.txtM_Telefono.Size = new System.Drawing.Size(246, 23);
             this.txtM_Telefono.TabIndex = 22;
@@ -244,6 +259,7 @@
             this.txtCodCLiente.Name = "txtCodCLiente";
             this.txtCodCLiente.Size = new System.Drawing.Size(50, 23);
             this.txtCodCLiente.TabIndex = 29;
+            this.txtCodCLiente.Visible = false;
             // 
             // btnNuevoBarrio
             // 
@@ -348,6 +364,8 @@
             this.cmb_CodTipoDoc.Name = "cmb_CodTipoDoc";
             this.cmb_CodTipoDoc.Size = new System.Drawing.Size(246, 24);
             this.cmb_CodTipoDoc.TabIndex = 12;
+            this.cmb_CodTipoDoc.SelectedIndexChanged += new System.EventHandler(this.cmb_CodTipoDoc_SelectedIndexChanged);
+            this.cmb_CodTipoDoc.RightToLeftChanged += new System.EventHandler(this.cmb_CodTipoDoc_RightToLeftChanged);
             // 
             // txt_NroDocumento
             // 
@@ -366,14 +384,14 @@
             this.label9.TabIndex = 10;
             this.label9.Text = "Apellido";
             // 
-            // label8
+            // lblNombre
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(13, 57);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(58, 17);
-            this.label8.TabIndex = 9;
-            this.label8.Text = "Nombre";
+            this.lblNombre.AutoSize = true;
+            this.lblNombre.Location = new System.Drawing.Point(13, 57);
+            this.lblNombre.Name = "lblNombre";
+            this.lblNombre.Size = new System.Drawing.Size(58, 17);
+            this.lblNombre.TabIndex = 9;
+            this.lblNombre.Text = "Nombre";
             // 
             // label7
             // 
@@ -485,6 +503,7 @@
             this.btnImprimir.Size = new System.Drawing.Size(36, 36);
             this.btnImprimir.Text = "toolStripButton1";
             this.btnImprimir.ToolTipText = "Imprimir";
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
             // btnSalir
             // 
@@ -495,23 +514,6 @@
             this.btnSalir.Size = new System.Drawing.Size(36, 36);
             this.btnSalir.Text = "Salir";
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(377, 214);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(103, 17);
-            this.label3.TabIndex = 73;
-            this.label3.Text = "Observaciones";
-            // 
-            // txt_Observacion
-            // 
-            this.txt_Observacion.Location = new System.Drawing.Point(492, 214);
-            this.txt_Observacion.Multiline = true;
-            this.txt_Observacion.Name = "txt_Observacion";
-            this.txt_Observacion.Size = new System.Drawing.Size(246, 80);
-            this.txt_Observacion.TabIndex = 74;
             // 
             // FrmAbmCliente
             // 
@@ -557,7 +559,7 @@
         private System.Windows.Forms.ComboBox cmb_CodTipoDoc;
         private System.Windows.Forms.TextBox txt_NroDocumento;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblNombre;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ToolStrip BarraBotones;

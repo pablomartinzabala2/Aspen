@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Data.SqlClient;
 namespace Concesionaria.Clases
 {
     public class cChequeCobrar
@@ -41,7 +42,7 @@ namespace Concesionaria.Clases
             return Importe;
         }
 
-        public DataTable GetChequesxFecha(DateTime FechaDesde, DateTime FechaHasta, int SoloImpago)
+        public DataTable GetChequesxFecha(DateTime FechaDesde, DateTime FechaHasta, int SoloImpago,string Apellido, string NumeroCheque)
         {
             string sql = "select c.CodCheque,c.Fecha,c.NumeroCheque,";
             sql = sql + "(select b.Nombre from Banco b where b.CodBanco = c.CodBanco) as Banco";
@@ -52,6 +53,17 @@ namespace Concesionaria.Clases
             sql = sql + " and c.Fecha<=" + "'" + FechaHasta.ToShortDateString() + "'";
             if (SoloImpago == 1)
                 sql = sql + " and c.FechaPago is null";
+            if (Apellido !="")
+            {
+                sql = sql + " and c.Apellido like " + "'%" + Apellido +"%'";
+            }
+
+            if (NumeroCheque != "")
+            {
+                sql = sql + " and c.NumeroCheque like " + "'%" + NumeroCheque + "%'";
+            }
+
+            
             return cDb.ExecuteDataTable(sql);
         }
 
@@ -85,6 +97,46 @@ namespace Concesionaria.Clases
             sql = sql + " where CodCheque=" + CodChque.ToString();
             cDb.ExecutarNonQuery(sql);
 
+        }
+
+        public void InsertarTransaccion(SqlConnection con, SqlTransaction Transaccion, DateTime Fecha, DateTime Vencimiento,
+          Double Importe, Int32? CodBanco, string Apellido,
+          string Nombre, string Patente, string Telefono, string NumeroCheque,Int32? CodRecibo)
+        {
+            string sql = "insert into chequecobrar(";
+            sql = sql + "Fecha,Vencimiento,Importe,CodBanco,";
+            sql = sql + "Apellido,Nombre,Patente,Telefono,NumeroCheque,CodRecibo)";
+            sql = sql + " Values(" + "'" + Fecha.ToShortDateString() + "'";
+            sql = sql + "," + "'" + Vencimiento.ToShortDateString() + "'";
+            sql = sql + "," + Importe.ToString().Replace(",", ".");
+            sql = sql + "," + CodBanco.ToString();
+            sql = sql + "," + "'" + Apellido + "'";
+            sql = sql + "," + "'" + Nombre + "'";
+            sql = sql + "," + "'" + Patente + "'";
+            sql = sql + "," + "'" + Telefono + "'";
+            sql = sql + "," + "'" + NumeroCheque + "'";
+            if (CodRecibo != null)
+                sql = sql + "," + CodRecibo.ToString();
+            else
+                sql = sql + ",null";
+            sql = sql + ")";
+            cDb.EjecutarNonQueryTransaccion(con, Transaccion, sql);
+
+        }
+
+        public DataTable GetChequesImpagoss()
+        {
+            string sql = "select CodCheque,Importe,Fecha,Vencimiento,Apellido from chequecobrar ";
+            sql = sql + " where FechaPago is null ";
+            return cDb.ExecuteDataTable(sql);
+        }
+
+        public void ActualizarFechaCobro(SqlConnection con, SqlTransaction Transaccion,Int32 CodCheque,DateTime Fecha)
+        {
+            string sql = "update ChequeCobrar ";
+            sql = sql + " set FechaPago=" + "'" + Fecha.ToShortDateString() + "'";
+            sql = sql + " where CodCheque=" + CodCheque.ToString();
+            cDb.EjecutarNonQueryTransaccion(con, Transaccion, sql);
         }
     }
 }

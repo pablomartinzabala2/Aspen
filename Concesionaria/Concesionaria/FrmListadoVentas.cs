@@ -14,13 +14,23 @@ namespace Concesionaria
         public FrmListadoVentas()
         {
             InitializeComponent();
-            DateTime fecha = DateTime.Now;
-            DateTime fecha1 = fecha.AddMonths(-1);
-            txtFechaDesde.Text = fecha1.ToShortDateString();
-            txtFechaHasta.Text = fecha.ToShortDateString();
+            InicializarFechas();
             txtTotal.BackColor = cColor.CajaTexto();
             txtCantidadVentas.BackColor = cColor.CajaTexto();
             Buscar();
+        }
+
+        private void InicializarFechas()
+        {
+            DateTime Fecha = DateTime.Now;
+            int dia = Fecha.Day;
+            int Mes = Fecha.Month;
+            Fecha =Fecha.AddDays(-dia);
+            Fecha = Fecha.AddDays(1);
+            dpFechaDesde.Value = Fecha;
+            Fecha = Fecha.AddMonths(1);
+            Fecha = Fecha.AddDays(-1);
+            dpFechaHasta.Value = Fecha;
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -31,19 +41,7 @@ namespace Concesionaria
         private void Buscar()
         {
             Clases.cFunciones fun = new Clases.cFunciones();
-            if (fun.ValidarFecha(txtFechaDesde.Text) == false)
-            {
-                MessageBox.Show("Fecha desde incorrecta", Clases.cMensaje.Mensaje());
-                return;
-            }
-
-            if (fun.ValidarFecha(txtFechaHasta.Text) == false)
-            {
-                MessageBox.Show("Fecha hasta incorrecta", Clases.cMensaje.Mensaje());
-                return;
-            }
-
-            if (Convert.ToDateTime(txtFechaDesde.Text) > Convert.ToDateTime(txtFechaHasta.Text))
+            if (Convert.ToDateTime(dpFechaDesde.Value) > Convert.ToDateTime(dpFechaHasta.Value))
             {
                 MessageBox.Show("La fecha desde debe ser inferior a la fecha hasta", Clases.cMensaje.Mensaje());
                 return;
@@ -52,8 +50,8 @@ namespace Concesionaria
             if (txtApellido.Text != "")
                 Apellido = txtApellido.Text;
             Clases.cVenta objVenta = new Clases.cVenta();
-            DateTime FechaDesde = Convert.ToDateTime(txtFechaDesde.Text);
-            DateTime FechaHasta = Convert.ToDateTime(txtFechaHasta.Text);
+            DateTime FechaDesde = dpFechaDesde.Value;
+            DateTime FechaHasta = dpFechaHasta.Value;
             DataTable trdo = objVenta.GetVentasxFecha(FechaDesde, FechaHasta, txtPatente.Text.Trim(), Apellido);
             Clases.cPreVenta objPreVenta = new Clases.cPreVenta();
 
@@ -134,8 +132,13 @@ namespace Concesionaria
 
                 }
             }
+            string Col = "0;0;20;5;10;10;0";
+            Col = Col + ";5;10;10;0;0;10;10";
+            Col = Col + ";10;0;0;0";
+            fun.AnchoColumnas(Grilla, Col);
             //
-            Grilla.Columns[0].Visible = false;
+         //   Grilla.Columns[0].Visible = false;
+            /*
             Grilla.Columns[2].HeaderText = "Descripción";
             Grilla.Columns[7].HeaderText = "Total";
             Grilla.Columns[8].HeaderText = "Efectivo";
@@ -143,10 +146,10 @@ namespace Concesionaria
             Grilla.Columns[10].HeaderText = "Documentos";
             Grilla.Columns[11].HeaderText = "Prenda";
             Grilla.Columns[13].HeaderText = "Cobranza";
-            Grilla.Columns[15].Visible = false;
+        //    Grilla.Columns[15].Visible = false;
 
             Grilla.Columns[1].Width = 105;
-            Grilla.Columns[5].Visible = false;
+           // Grilla.Columns[5].Visible = false;
             Grilla.Columns[3].HeaderText = "Parte Pago";
             Grilla.Columns[7].Width = 80;
             Grilla.Columns[8].Width = 80;
@@ -155,11 +158,13 @@ namespace Concesionaria
             Grilla.Columns[11].Width = 80;
             Grilla.Columns[12].Width = 80;
             Grilla.Columns[13].Width = 80;
+            Grilla.Columns[16].Visible = false;
             for (int k = 0; k < Grilla.Rows.Count - 1; k++)
             {
                 if (k >= PosPintar)
                     Grilla.Rows[k].DefaultCellStyle.BackColor = Color.LightGray;
             }
+            */
         }
 
         private void btnAbrirVenta_Click(object sender, EventArgs e)
@@ -170,7 +175,8 @@ namespace Concesionaria
                 return;
             }
 
-            if (Grilla.CurrentRow.DefaultCellStyle.BackColor == Color.LightGray)
+            string Tipo = Grilla.CurrentRow.Cells[17].Value.ToString();
+            if (Tipo =="PreVenta")
             {
                 string CodPreVenta = Grilla.CurrentRow.Cells[0].Value.ToString();
                 Principal.CodigoPrincipalAbm = null;
@@ -178,7 +184,8 @@ namespace Concesionaria
                 FrmVenta form = new FrmVenta();
                 form.ShowDialog();
             }
-            else
+
+            if (Tipo =="Venta")
             {
                 string CodVenta = Grilla.CurrentRow.Cells[0].Value.ToString();
                 Principal.CodigoPrincipalAbm = CodVenta;
@@ -186,6 +193,8 @@ namespace Concesionaria
                 FrmVenta form = new FrmVenta();
                 form.ShowDialog();
             }
+
+          
             
 
         }
@@ -199,8 +208,11 @@ namespace Concesionaria
             }
             string CodVenta = Grilla.CurrentRow.Cells[0].Value.ToString();
             Principal.CodigoPrincipalAbm = CodVenta;
-            FrmVistaPrevia form = new FrmVistaPrevia();
-            form.Show();
+            Principal.TablaPrincipal = Grilla.CurrentRow.Cells[8].Value.ToString();
+            FrmBoletoTraut frm = new FrmBoletoTraut();
+            frm.Show();         
+            //  FrmVistaPrevia form = new FrmVistaPrevia();
+           // form.Show();
         }
 
         private void BtnVerGanancia_Click(object sender, EventArgs e)

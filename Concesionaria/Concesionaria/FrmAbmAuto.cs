@@ -26,12 +26,25 @@ namespace Concesionaria
             fun.LlenarCombo(cmb_CodTipoCombustible, "TipoCombustible", "Nombre", "Codigo");
             fun.LlenarCombo(cmb_CodTipoUtilitario, "TipoUtilitario", "Nombre", "CodTipo");
             fun.LlenarCombo(cmb_CodSucursal, "Sucursal", "Nombre", "CodSucursal");
-         }
+            fun.LlenarCombo(cmb_CodColor, "Color", "Nombre", "CodColor");
+            string sql = "select * from Anio order by Nombre Desc";
+            DataTable tbAnio = cDb.ExecuteDataTable(sql);
+            fun.LlenarComboDatatable(cmb_CodAnio, tbAnio, "Nombre", "CodAnio");
+            if (Principal.CodigoAuto !=null)
+            {
+                txtCodAuto.Text = Principal.CodigoAuto.ToString();
+                fun.CargarControles(this, "Auto", "CodAuto", txtCodAuto.Text);
+                UbicarProvincia(Convert.ToInt32(txtCodAuto.Text));
+                Botonera(2);
+                Grupo.Enabled = true;
+            }
+        }
 
         private void InicializarComponentes()
         {
             Clases.cFunciones fun = new Clases.cFunciones();
             fun.LlenarCombo(cmb_CodMarca, "Marca", "Nombre", "CodMarca");
+           
         }
 
         private void btnGrabar_Click(object sender, EventArgs e)
@@ -49,11 +62,7 @@ namespace Concesionaria
 
         private Boolean Validar()
         {
-            if (txt_Patente.Text == "")
-            {
-                MessageBox.Show("Debe ingresar una patente para continuar", Clases.cMensaje.Mensaje());
-                return false;
-            }
+           
 
             if (txt_Kilometros.Text == "")
                 txt_Kilometros.Text = "0";
@@ -140,9 +149,33 @@ namespace Concesionaria
                         fun.CargarControles(this, "Auto", "CodAuto", txtCodAuto.Text);
                     Grupo.Enabled = false;
                     UbicarProvincia(Convert.ToInt32(txtCodAuto.Text));
-                    return;
+                    
                 }
 
+            }
+
+            if (Principal.CampoIdSecundarioGenerado != "")
+            {
+
+                switch (Principal.NombreTablaSecundario)
+                {
+                    case "Marca":
+                        fun.LlenarCombo(cmb_CodMarca, "Marca", "Nombre", "CodMarca");
+                        cmb_CodMarca.SelectedValue = Principal.CampoIdSecundarioGenerado;
+                        break;
+                    case "Color":    
+                        fun.LlenarCombo(cmb_CodColor, "Color", "Nombre", "CodColor");
+                        cmb_CodColor.SelectedValue = Principal.CampoIdSecundarioGenerado;
+                        break;
+                    case "Anio":  
+                        string sql = "select * from Anio order by Nombre desc";
+                        DataTable tbAnio = cDb.ExecuteDataTable(sql);
+
+                        fun.LlenarComboDatatable(cmb_CodAnio, tbAnio, "Nombre", "CodAnio");
+                        cmb_CodAnio.SelectedValue = Principal.CampoIdSecundarioGenerado;
+                        break;
+                   
+                }
             }
 
 
@@ -386,7 +419,7 @@ namespace Concesionaria
                 if (txtCodAuto.Text == "")
                 {
                     fun.GuardarNuevoGenerico(this, "Auto");
-                    if (ChkAltaStock.Checked == true)
+                    if (ChkAltaStock.Checked==true)
                     {
                         DateTime fecha = DateTime.Now;
                         cAuto auto = new Clases.cAuto();
@@ -394,9 +427,8 @@ namespace Concesionaria
 
                         Int32 CodAuto = auto.GetMaxCodAuto();
                         stock.InsertarStockAuto(CodAuto, fecha.ToShortDateString(), null, Principal.CodUsuarioLogueado, null);
-                    }
+                    }  
                 }
-                   
                 else
                 {
                     fun.ModificarGenerico(this, "Auto", "CodAuto", txtCodAuto.Text);
@@ -408,11 +440,11 @@ namespace Concesionaria
                         cAuto auto = new Clases.cAuto();
                         cStockAuto stock = new cStockAuto();
                         CodStock = stock.GetMaxCodStockxAutoVigente(CodAuto);
-                        if (CodStock == 0)
+                        if (CodStock==0)
                             stock.InsertarStockAuto(CodAuto, fecha.ToShortDateString(), null, Principal.CodUsuarioLogueado, null);
                     }
                 }
-                   
+               
                 MessageBox.Show("Datos grabados Correctamente", Clases.cMensaje.Mensaje());
                 Botonera(1);
                 fun.LimpiarGenerico(this);
@@ -422,6 +454,7 @@ namespace Concesionaria
                     cmbProvincia.SelectedIndex = 0;
             }
         }
+
 
         private void btnAbrir_Click_1(object sender, EventArgs e)
         {
@@ -498,6 +531,44 @@ namespace Concesionaria
             {
                 txt_RutaImagen.Text = "";
             }
+        }
+
+        private void btnAgregarCiudad_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Principal.CampoIdSecundario = "CodMarca";
+            Principal.CampoNombreSecundario = "Nombre";
+            Principal.NombreTablaSecundario = "Marca";
+            Principal.CampoIdSecundarioGenerado = "";
+            FrmAltaBasica form = new FrmAltaBasica();
+            form.FormClosing += new FormClosingEventHandler(form_FormClosing);
+            form.ShowDialog();
+        }
+
+        private void btnNuevoColor_Click(object sender, EventArgs e)
+        {
+            Principal.CampoIdSecundario = "CodColor";
+            Principal.CampoNombreSecundario = "Nombre";
+            Principal.NombreTablaSecundario = "Color";
+            Principal.CodigoPrincipalAbm = null;
+            FrmAltaBasica form = new FrmAltaBasica();
+            form.FormClosing += new FormClosingEventHandler(form_FormClosing);
+            form.ShowDialog();
+        }
+
+        private void btnAgregarAnio_Click(object sender, EventArgs e)
+        {
+            Principal.CampoIdSecundario = "CodAnio";
+            Principal.CampoNombreSecundario = "Nombre";
+            Principal.NombreTablaSecundario = "Anio";
+            Principal.CampoIdSecundarioGenerado = "";
+            FrmAltaBasica form = new FrmAltaBasica();
+            form.FormClosing += new FormClosingEventHandler(form_FormClosing);
+            form.ShowDialog();
         }
     }
 }

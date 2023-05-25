@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtFechaCobro = new System.Windows.Forms.MaskedTextBox();
             this.btnAlarma = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.txtPatente = new System.Windows.Forms.TextBox();
@@ -49,13 +52,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtImporte = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtFechaCobro = new System.Windows.Forms.MaskedTextBox();
-            this.label8 = new System.Windows.Forms.Label();
+            this.txtCodCliente = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtCodCliente);
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.txtFechaCobro);
             this.groupBox1.Controls.Add(this.btnAlarma);
@@ -86,6 +90,34 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Registrar efectivo";
             // 
+            // button1
+            // 
+            this.button1.Image = global::Concesionaria.Properties.Resources.email;
+            this.button1.Location = new System.Drawing.Point(298, 135);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(40, 29);
+            this.button1.TabIndex = 68;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(43, 173);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(87, 17);
+            this.label8.TabIndex = 67;
+            this.label8.Text = "Fecha cobro";
+            // 
+            // txtFechaCobro
+            // 
+            this.txtFechaCobro.Location = new System.Drawing.Point(146, 173);
+            this.txtFechaCobro.Mask = "00/00/0000";
+            this.txtFechaCobro.Name = "txtFechaCobro";
+            this.txtFechaCobro.Size = new System.Drawing.Size(75, 23);
+            this.txtFechaCobro.TabIndex = 66;
+            this.txtFechaCobro.ValidatingType = typeof(System.DateTime);
+            // 
             // btnAlarma
             // 
             this.btnAlarma.Image = global::Concesionaria.Properties.Resources.RelojChico1;
@@ -115,7 +147,7 @@
             // btnDetalle
             // 
             this.btnDetalle.Image = global::Concesionaria.Properties.Resources.Grilla;
-            this.btnDetalle.Location = new System.Drawing.Point(252, 310);
+            this.btnDetalle.Location = new System.Drawing.Point(262, 337);
             this.btnDetalle.Name = "btnDetalle";
             this.btnDetalle.Size = new System.Drawing.Size(40, 29);
             this.btnDetalle.TabIndex = 62;
@@ -164,7 +196,7 @@
             this.txtCodCobranza.Location = new System.Drawing.Point(252, 29);
             this.txtCodCobranza.Name = "txtCodCobranza";
             this.txtCodCobranza.ReadOnly = true;
-            this.txtCodCobranza.Size = new System.Drawing.Size(100, 23);
+            this.txtCodCobranza.Size = new System.Drawing.Size(67, 23);
             this.txtCodCobranza.TabIndex = 30;
             this.txtCodCobranza.Visible = false;
             // 
@@ -265,23 +297,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = " Monto";
             // 
-            // txtFechaCobro
+            // txtCodCliente
             // 
-            this.txtFechaCobro.Location = new System.Drawing.Point(146, 173);
-            this.txtFechaCobro.Mask = "00/00/0000";
-            this.txtFechaCobro.Name = "txtFechaCobro";
-            this.txtFechaCobro.Size = new System.Drawing.Size(75, 23);
-            this.txtFechaCobro.TabIndex = 66;
-            this.txtFechaCobro.ValidatingType = typeof(System.DateTime);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(43, 173);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(87, 17);
-            this.label8.TabIndex = 67;
-            this.label8.Text = "Fecha cobro";
+            this.txtCodCliente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.txtCodCliente.Location = new System.Drawing.Point(333, 29);
+            this.txtCodCliente.Name = "txtCodCliente";
+            this.txtCodCliente.ReadOnly = true;
+            this.txtCodCliente.Size = new System.Drawing.Size(74, 23);
+            this.txtCodCliente.TabIndex = 69;
+            this.txtCodCliente.Visible = false;
             // 
             // FrmRegistrarCobroCobranzasGenerales
             // 
@@ -327,5 +351,7 @@
         private System.Windows.Forms.Button btnAlarma;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.MaskedTextBox txtFechaCobro;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox txtCodCliente;
     }
 }
