@@ -14,7 +14,7 @@ namespace Concesionaria.Clases
         {
             string sql ="select * from cliente";
             sql = sql + " where NroDocumento =" + "'" + NroDocumento + "'";
-            sql = sql + " and CodTipoDoc=" + CodTipoDoc.ToString ();
+          //  sql = sql + " and CodTipoDoc=" + CodTipoDoc.ToString ();
             return cDb.ExecuteDataTable(sql);
         }
 
@@ -87,8 +87,8 @@ namespace Concesionaria.Clases
         public DataTable GetClientexNroDoc(Int32? CodTipoDoc, string NroDocumento)
         {
             string sql = "select * from cliente";
-            sql = sql + " where CodTipoDoc =" + CodTipoDoc.ToString();
-            sql = sql + " and NroDocumento =" + "'" + NroDocumento + "'";
+          //  sql = sql + " where CodTipoDoc =" + CodTipoDoc.ToString();
+            sql = sql + " where NroDocumento =" + "'" + NroDocumento + "'";
             DataTable trdo = cDb.ExecuteDataTable (sql);
             return trdo ;
         }

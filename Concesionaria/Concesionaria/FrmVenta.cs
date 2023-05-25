@@ -52,8 +52,8 @@ namespace Concesionaria
             string sqlDoc = "select * from TipoDocumento order by CodTipoDoc";
             DataTable tbDoc = cDb.ExecuteDataTable(sqlDoc);
             fun.LlenarComboDatatable(cmbDocumento, tbDoc, "Nombre", "CodTipoDoc");
-            if (cmbDocumento.Items.Count > 1)
-                cmbDocumento.SelectedIndex = 1;
+           // if (cmbDocumento.Items.Count > 1)
+             //   cmbDocumento.SelectedIndex = 1;
             fun.LlenarCombo(CmbBarrio, "Barrio", "Nombre", "CodBarrio");
             fun.LlenarCombo(CmbGastosTransferencia, "CategoriaGastoTransferencia", "Descripcion", "Codigo");
             fun.LlenarCombo(CmbGastoRecepcion, "CategoriaGastoRecepcion", "Descripcion", "Codigo");
@@ -339,8 +339,8 @@ namespace Concesionaria
         private void txtNroDoc_TextChanged(object sender, EventArgs e)
         {
             Int32 CodTipoDoc = 0;
-            if (cmbDocumento.SelectedIndex > 0)
-                CodTipoDoc = Convert.ToInt32(cmbDocumento.SelectedValue);
+          //  if (cmbDocumento.SelectedIndex > 0)
+             //   CodTipoDoc = Convert.ToInt32(cmbDocumento.SelectedValue);
             string nroDocumento = txtNroDoc.Text;
             Clases.cCliente cliente = new Clases.cCliente();
             DataTable trdo = cliente.GetClientesxNroDoc(CodTipoDoc, nroDocumento);
@@ -1194,7 +1194,7 @@ namespace Concesionaria
                     }
                 }
                // GuardarRecibo(con, Transaccion);
-                GuardarBoleto(con, Transaccion, Convert.ToInt32(CodVenta));
+             //   GuardarBoleto(con, Transaccion, Convert.ToInt32(CodVenta));
                 Transaccion.Commit();
               
                 con.Close();
@@ -1318,8 +1318,9 @@ namespace Concesionaria
         {
             string sql = "";
             Int32? CodTipoDoc = null;
-            if (cmbDocumento.SelectedIndex > 0)
-                CodTipoDoc = Convert.ToInt32(cmbDocumento.SelectedValue);
+          //  String XX = cmbDocumento.SelectedValue.ToString();
+          //  if (cmbDocumento.SelectedIndex > 0)
+            //    CodTipoDoc = Convert.ToInt32(cmbDocumento.SelectedValue);
             string NroDocumento = txtNroDoc.Text;
             Clases.cCliente cliente = new Clases.cCliente();
             DataTable trdo = cliente.GetClientexNroDoc(CodTipoDoc, NroDocumento);
@@ -1351,7 +1352,7 @@ namespace Concesionaria
                 GrabaClienteNuevo = true;
                 sql = cliente.GetSqlInsertarCliente(CodTipoDoc, NroDocumento, Nombre,
                       Apellido, Telefono, Celular, Calle, Altura, CodBarrio, Observacion, RutaImagen, FechaNacimiento);
-                txtCodCLiente.Text = cliente.GetMaxCliente().ToString();
+              //  txtCodCLiente.Text = cliente.GetMaxCliente().ToString();
             }
             else
             {
@@ -6268,12 +6269,13 @@ namespace Concesionaria
         }
 
         private void cmbDocumento_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        { /*
             if (cmbDocumento.SelectedIndex >0)
             {
                 int CodTipoDoc = Convert.ToInt32(cmbDocumento.SelectedValue);
                 OcultarTipoDoc(CodTipoDoc);
             }
+            */
         }
 
         private void OcultarTipoDoc(int CodTipo)
