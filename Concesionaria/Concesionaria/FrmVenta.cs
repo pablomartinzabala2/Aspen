@@ -2495,8 +2495,11 @@ namespace Concesionaria
             {
                 Subtotal = Subtotal + fun.ToDouble(txtDocumentoPresupuesto.Text);
             }
-
-           
+             
+            if (txtEquivalentePesos.Text != "")
+            {
+                Subtotal = Subtotal + fun.ToDouble(txtEquivalentePesos.Text);
+            }
 
             txtSubTotal.Text = Subtotal.ToString();
             if (txtSubTotal.Text != "")
@@ -6305,6 +6308,35 @@ namespace Concesionaria
         {
             Int32 CodCliente = Convert.ToInt32(Principal.CodigoPrincipalAbm);
             BuscarClientexCodigo(CodCliente);
+        }
+
+        private void txtImporteDolares_Leave(object sender, EventArgs e)
+        {
+            if (txtImporteDolares.Text != "")
+            {
+                Clases.cFunciones fun = new Clases.cFunciones();
+                txtDolares.Text = fun.FormatoEnteroMiles(txtImporteDolares.Text);
+            }
+        }
+
+        private void txtCotizacionDolar_Leave(object sender, EventArgs e)
+        {
+            cFunciones fun = new cFunciones();
+            if (txtImporteDolares.Text == "")
+            {
+                MessageBox.Show("Debe ingresar un importe en dolares ");
+                return;
+            }
+
+            if (txtCotizacionDolar.Text != "")
+            {
+                int CotDolar = Convert.ToInt32(txtCotizacionDolar.Text);
+                Int32 Dolares = Convert.ToInt32(txtImporteDolares.Text);
+                Int32 Pesos = CotDolar * Dolares;
+                txtEquivalentePesos.Text = Pesos.ToString();
+                txtEquivalentePesos.Text = fun.FormatoEnteroMiles(txtEquivalentePesos.Text);
+                CalcularSubTotal();
+            }
         }
     }
 }

@@ -77,6 +77,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button5 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnBuscarCliente = new System.Windows.Forms.Button();
             this.txtRutaImagenCliente = new System.Windows.Forms.TextBox();
             this.imgFotoCliente = new System.Windows.Forms.PictureBox();
             this.btnSubirFotoCliente = new System.Windows.Forms.Button();
@@ -337,7 +338,14 @@
             this.btnAnular = new System.Windows.Forms.Button();
             this.btnGrabarPreVenta = new System.Windows.Forms.Button();
             this.btnPresupuesto = new System.Windows.Forms.Button();
-            this.btnBuscarCliente = new System.Windows.Forms.Button();
+            this.txtImporteDolares = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtCotizacionDolar = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtEquivalentePesos = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtDolares = new System.Windows.Forms.TextBox();
+            this.label89 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -918,6 +926,16 @@
             this.groupBox1.Size = new System.Drawing.Size(826, 179);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
+            // 
+            // btnBuscarCliente
+            // 
+            this.btnBuscarCliente.Image = global::Concesionaria.Properties.Resources.carpeta;
+            this.btnBuscarCliente.Location = new System.Drawing.Point(373, 4);
+            this.btnBuscarCliente.Name = "btnBuscarCliente";
+            this.btnBuscarCliente.Size = new System.Drawing.Size(40, 27);
+            this.btnBuscarCliente.TabIndex = 75;
+            this.btnBuscarCliente.UseVisualStyleBackColor = true;
+            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
             // 
             // txtRutaImagenCliente
             // 
@@ -2082,6 +2100,12 @@
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.tabPage4.Controls.Add(this.txtEquivalentePesos);
+            this.tabPage4.Controls.Add(this.label11);
+            this.tabPage4.Controls.Add(this.txtCotizacionDolar);
+            this.tabPage4.Controls.Add(this.label9);
+            this.tabPage4.Controls.Add(this.txtImporteDolares);
+            this.tabPage4.Controls.Add(this.label8);
             this.tabPage4.Controls.Add(this.label88);
             this.tabPage4.Controls.Add(this.groupBox6);
             this.tabPage4.Controls.Add(this.txtEfectivo);
@@ -2206,9 +2230,9 @@
             // txtEfectivo
             // 
             this.txtEfectivo.BackColor = System.Drawing.SystemColors.Control;
-            this.txtEfectivo.Location = new System.Drawing.Point(82, 47);
+            this.txtEfectivo.Location = new System.Drawing.Point(155, 47);
             this.txtEfectivo.Name = "txtEfectivo";
-            this.txtEfectivo.Size = new System.Drawing.Size(194, 22);
+            this.txtEfectivo.Size = new System.Drawing.Size(145, 22);
             this.txtEfectivo.TabIndex = 32;
             this.txtEfectivo.Click += new System.EventHandler(this.txtEfectivo_Click);
             this.txtEfectivo.TextChanged += new System.EventHandler(this.txtEfectivo_TextChanged);
@@ -2220,9 +2244,9 @@
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(23, 47);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(53, 16);
+            this.label16.Size = new System.Drawing.Size(95, 16);
             this.label16.TabIndex = 31;
-            this.label16.Text = "Importe";
+            this.label16.Text = "Importe Pesos";
             // 
             // tabPage6
             // 
@@ -3333,6 +3357,8 @@
             // 
             this.groupBox55.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.groupBox55.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.groupBox55.Controls.Add(this.label89);
+            this.groupBox55.Controls.Add(this.txtDolares);
             this.groupBox55.Controls.Add(this.label50);
             this.groupBox55.Controls.Add(this.txtTotalCheque);
             this.groupBox55.Controls.Add(this.label38);
@@ -3352,7 +3378,7 @@
             this.groupBox55.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)), true);
             this.groupBox55.Location = new System.Drawing.Point(16, 446);
             this.groupBox55.Name = "groupBox55";
-            this.groupBox55.Size = new System.Drawing.Size(867, 88);
+            this.groupBox55.Size = new System.Drawing.Size(867, 120);
             this.groupBox55.TabIndex = 3;
             this.groupBox55.TabStop = false;
             this.groupBox55.Text = "Resumen";
@@ -3511,7 +3537,7 @@
             // btnGrabar
             // 
             this.btnGrabar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGrabar.Location = new System.Drawing.Point(607, 540);
+            this.btnGrabar.Location = new System.Drawing.Point(604, 553);
             this.btnGrabar.Name = "btnGrabar";
             this.btnGrabar.Size = new System.Drawing.Size(131, 36);
             this.btnGrabar.TabIndex = 4;
@@ -3522,7 +3548,7 @@
             // btnAnular
             // 
             this.btnAnular.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAnular.Location = new System.Drawing.Point(197, 540);
+            this.btnAnular.Location = new System.Drawing.Point(194, 553);
             this.btnAnular.Name = "btnAnular";
             this.btnAnular.Size = new System.Drawing.Size(119, 36);
             this.btnAnular.TabIndex = 5;
@@ -3534,7 +3560,7 @@
             // btnGrabarPreVenta
             // 
             this.btnGrabarPreVenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGrabarPreVenta.Location = new System.Drawing.Point(470, 540);
+            this.btnGrabarPreVenta.Location = new System.Drawing.Point(467, 553);
             this.btnGrabarPreVenta.Name = "btnGrabarPreVenta";
             this.btnGrabarPreVenta.Size = new System.Drawing.Size(131, 36);
             this.btnGrabarPreVenta.TabIndex = 6;
@@ -3545,7 +3571,7 @@
             // btnPresupuesto
             // 
             this.btnPresupuesto.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPresupuesto.Location = new System.Drawing.Point(327, 540);
+            this.btnPresupuesto.Location = new System.Drawing.Point(324, 553);
             this.btnPresupuesto.Name = "btnPresupuesto";
             this.btnPresupuesto.Size = new System.Drawing.Size(131, 36);
             this.btnPresupuesto.TabIndex = 7;
@@ -3553,22 +3579,83 @@
             this.btnPresupuesto.UseVisualStyleBackColor = true;
             this.btnPresupuesto.Click += new System.EventHandler(this.btnPresupuesto_Click);
             // 
-            // btnBuscarCliente
+            // txtImporteDolares
             // 
-            this.btnBuscarCliente.Image = global::Concesionaria.Properties.Resources.carpeta;
-            this.btnBuscarCliente.Location = new System.Drawing.Point(373, 4);
-            this.btnBuscarCliente.Name = "btnBuscarCliente";
-            this.btnBuscarCliente.Size = new System.Drawing.Size(40, 27);
-            this.btnBuscarCliente.TabIndex = 75;
-            this.btnBuscarCliente.UseVisualStyleBackColor = true;
-            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
+            this.txtImporteDolares.BackColor = System.Drawing.SystemColors.Control;
+            this.txtImporteDolares.Location = new System.Drawing.Point(155, 82);
+            this.txtImporteDolares.Name = "txtImporteDolares";
+            this.txtImporteDolares.Size = new System.Drawing.Size(142, 22);
+            this.txtImporteDolares.TabIndex = 42;
+            this.txtImporteDolares.Leave += new System.EventHandler(this.txtImporteDolares_Leave);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(26, 82);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(104, 16);
+            this.label8.TabIndex = 41;
+            this.label8.Text = "Importe Dolares";
+            // 
+            // txtCotizacionDolar
+            // 
+            this.txtCotizacionDolar.BackColor = System.Drawing.SystemColors.Control;
+            this.txtCotizacionDolar.Location = new System.Drawing.Point(155, 110);
+            this.txtCotizacionDolar.Name = "txtCotizacionDolar";
+            this.txtCotizacionDolar.Size = new System.Drawing.Size(85, 22);
+            this.txtCotizacionDolar.TabIndex = 44;
+            this.txtCotizacionDolar.Leave += new System.EventHandler(this.txtCotizacionDolar_Leave);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(26, 113);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(124, 16);
+            this.label9.TabIndex = 43;
+            this.label9.Text = "Cotización  Dolares";
+            // 
+            // txtEquivalentePesos
+            // 
+            this.txtEquivalentePesos.BackColor = System.Drawing.SystemColors.Control;
+            this.txtEquivalentePesos.Location = new System.Drawing.Point(153, 143);
+            this.txtEquivalentePesos.Name = "txtEquivalentePesos";
+            this.txtEquivalentePesos.Size = new System.Drawing.Size(121, 22);
+            this.txtEquivalentePesos.TabIndex = 46;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(24, 143);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(89, 16);
+            this.label11.TabIndex = 45;
+            this.label11.Text = "Equivalente $";
+            // 
+            // txtDolares
+            // 
+            this.txtDolares.BackColor = System.Drawing.Color.LightGreen;
+            this.txtDolares.Location = new System.Drawing.Point(13, 78);
+            this.txtDolares.Name = "txtDolares";
+            this.txtDolares.ReadOnly = true;
+            this.txtDolares.Size = new System.Drawing.Size(100, 23);
+            this.txtDolares.TabIndex = 50;
+            // 
+            // label89
+            // 
+            this.label89.AutoSize = true;
+            this.label89.Location = new System.Drawing.Point(11, 65);
+            this.label89.Name = "label89";
+            this.label89.Size = new System.Drawing.Size(64, 17);
+            this.label89.TabIndex = 51;
+            this.label89.Text = "Dolares";
             // 
             // FrmVenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(888, 585);
+            this.ClientSize = new System.Drawing.Size(888, 601);
             this.Controls.Add(this.btnPresupuesto);
             this.Controls.Add(this.btnGrabarPreVenta);
             this.Controls.Add(this.btnAnular);
@@ -3966,5 +4053,13 @@
         private System.Windows.Forms.Label txtImporte;
         private System.Windows.Forms.Label label88;
         private System.Windows.Forms.Button btnBuscarCliente;
+        private System.Windows.Forms.TextBox txtEquivalentePesos;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtCotizacionDolar;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtImporteDolares;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label89;
+        private System.Windows.Forms.TextBox txtDolares;
     }
 }
