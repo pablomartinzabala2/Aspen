@@ -1319,8 +1319,8 @@ namespace Concesionaria
             string sql = "";
             Int32? CodTipoDoc = null;
           //  String XX = cmbDocumento.SelectedValue.ToString();
-          //  if (cmbDocumento.SelectedIndex > 0)
-            //    CodTipoDoc = Convert.ToInt32(cmbDocumento.SelectedValue);
+            if (cmbDocumento.SelectedIndex > 0)
+                CodTipoDoc = Convert.ToInt32(cmbDocumento.SelectedValue);
             string NroDocumento = txtNroDoc.Text;
             Clases.cCliente cliente = new Clases.cCliente();
             DataTable trdo = cliente.GetClientexNroDoc(CodTipoDoc, NroDocumento);

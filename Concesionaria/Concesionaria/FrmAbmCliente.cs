@@ -21,8 +21,8 @@ namespace Concesionaria
         {
             Clases.cFunciones fun = new Clases.cFunciones();
             fun.LlenarCombo(cmb_CodTipoDoc, "TipoDocumento", "Nombre", "CodTipoDoc");
-            if (cmb_CodTipoDoc.Items.Count > 0)
-                cmb_CodTipoDoc.SelectedIndex = 1;
+         //   if (cmb_CodTipoDoc.Items.Count > 0)
+           //     cmb_CodTipoDoc.SelectedIndex = 1;
            
             fun.LlenarCombo(cmbProvincia2, "Provincia", "Nombre", "CodProvincia");
         }
@@ -112,8 +112,8 @@ namespace Concesionaria
             fun.LimpiarGenerico(this);
             txtCodCLiente.Text = "";
             Grupo.Enabled = true;
-            if (cmb_CodTipoDoc.Items.Count   > 0)
-                cmb_CodTipoDoc.SelectedIndex = 1;
+          //  if (cmb_CodTipoDoc.Items.Count   > 0)
+            //    cmb_CodTipoDoc.SelectedIndex = 1;
         }
 
         private void btnAbrir_Click(object sender, EventArgs e)
@@ -498,11 +498,7 @@ namespace Concesionaria
 
         private void cmb_CodTipoDoc_RightToLeftChanged(object sender, EventArgs e)
         {
-            if (cmb_CodTipoDoc.SelectedIndex > 0)
-            { 
-                int CodTipoDoc = Convert.ToInt32(cmb_CodTipoDoc.SelectedValue);
-                OcultarTipoDoc(CodTipoDoc);
-            }
+           
         }
 
         private void btnImprimir_Click(object sender, EventArgs e)
