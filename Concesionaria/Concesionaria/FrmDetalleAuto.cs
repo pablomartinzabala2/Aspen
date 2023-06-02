@@ -517,5 +517,20 @@ namespace Concesionaria
             GrillaProveedor.DataSource = trdo;
             fun.AnchoColumnas(GrillaProveedor, "30;30;30;10");
         }
+
+        private void btnGrabarCosto_Click(object sender, EventArgs e)
+        {
+            cFunciones fun = new cFunciones();
+            if (txtImporte.Text =="")
+            {
+                MessageBox.Show("Debe ingresar un importe");
+                return;
+            }
+            Double Importe = fun.ToDouble(txtImporte.Text);
+            Int32 CodStock = Convert.ToInt32(txtCodStock.Text);
+            cStockAuto stock = new cStockAuto();
+            stock.ActualizarPrecioCompra(CodStock, Importe);
+            MessageBox.Show("Datos actualizados correctamente ");
+        }
     }
 }

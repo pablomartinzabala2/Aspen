@@ -39,6 +39,7 @@
             this.btnImprimir = new System.Windows.Forms.ToolStripButton();
             this.btnSalir = new System.Windows.Forms.ToolStripButton();
             this.Grupo = new System.Windows.Forms.GroupBox();
+            this.btnNuevoTipoUtilitario = new System.Windows.Forms.Button();
             this.btnAgregarAnio = new System.Windows.Forms.Button();
             this.cmb_CodAnio = new System.Windows.Forms.ComboBox();
             this.btnNuevoColor = new System.Windows.Forms.Button();
@@ -81,7 +82,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txt_Patente = new System.Windows.Forms.TextBox();
             this.lblPatente = new System.Windows.Forms.Label();
-            this.btnNuevoTipoUtilitario = new System.Windows.Forms.Button();
+            this.btnAgregarProvincia = new System.Windows.Forms.Button();
             this.BarraBotones.SuspendLayout();
             this.Grupo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Imagen)).BeginInit();
@@ -190,6 +191,7 @@
             // 
             // Grupo
             // 
+            this.Grupo.Controls.Add(this.btnAgregarProvincia);
             this.Grupo.Controls.Add(this.btnNuevoTipoUtilitario);
             this.Grupo.Controls.Add(this.btnAgregarAnio);
             this.Grupo.Controls.Add(this.cmb_CodAnio);
@@ -241,10 +243,20 @@
             this.Grupo.TabStop = false;
             this.Grupo.Text = "Información del vehículo";
             // 
+            // btnNuevoTipoUtilitario
+            // 
+            this.btnNuevoTipoUtilitario.Image = global::Concesionaria.Properties.Resources.page_add;
+            this.btnNuevoTipoUtilitario.Location = new System.Drawing.Point(369, 228);
+            this.btnNuevoTipoUtilitario.Name = "btnNuevoTipoUtilitario";
+            this.btnNuevoTipoUtilitario.Size = new System.Drawing.Size(40, 28);
+            this.btnNuevoTipoUtilitario.TabIndex = 61;
+            this.btnNuevoTipoUtilitario.UseVisualStyleBackColor = true;
+            this.btnNuevoTipoUtilitario.Click += new System.EventHandler(this.btnNuevoTipoUtilitario_Click);
+            // 
             // btnAgregarAnio
             // 
             this.btnAgregarAnio.Image = global::Concesionaria.Properties.Resources.page_add;
-            this.btnAgregarAnio.Location = new System.Drawing.Point(369, 87);
+            this.btnAgregarAnio.Location = new System.Drawing.Point(369, 75);
             this.btnAgregarAnio.Name = "btnAgregarAnio";
             this.btnAgregarAnio.Size = new System.Drawing.Size(40, 28);
             this.btnAgregarAnio.TabIndex = 60;
@@ -506,7 +518,7 @@
             // button1
             // 
             this.button1.Image = global::Concesionaria.Properties.Resources.page_add;
-            this.button1.Location = new System.Drawing.Point(364, 50);
+            this.button1.Location = new System.Drawing.Point(369, 41);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(40, 28);
             this.button1.TabIndex = 18;
@@ -614,15 +626,15 @@
             this.lblPatente.TabIndex = 0;
             this.lblPatente.Text = "Patente";
             // 
-            // btnNuevoTipoUtilitario
+            // btnAgregarProvincia
             // 
-            this.btnNuevoTipoUtilitario.Image = global::Concesionaria.Properties.Resources.page_add;
-            this.btnNuevoTipoUtilitario.Location = new System.Drawing.Point(369, 228);
-            this.btnNuevoTipoUtilitario.Name = "btnNuevoTipoUtilitario";
-            this.btnNuevoTipoUtilitario.Size = new System.Drawing.Size(40, 28);
-            this.btnNuevoTipoUtilitario.TabIndex = 61;
-            this.btnNuevoTipoUtilitario.UseVisualStyleBackColor = true;
-            this.btnNuevoTipoUtilitario.Click += new System.EventHandler(this.btnNuevoTipoUtilitario_Click);
+            this.btnAgregarProvincia.Image = global::Concesionaria.Properties.Resources.page_add;
+            this.btnAgregarProvincia.Location = new System.Drawing.Point(369, 113);
+            this.btnAgregarProvincia.Name = "btnAgregarProvincia";
+            this.btnAgregarProvincia.Size = new System.Drawing.Size(40, 28);
+            this.btnAgregarProvincia.TabIndex = 62;
+            this.btnAgregarProvincia.UseVisualStyleBackColor = true;
+            this.btnAgregarProvincia.Click += new System.EventHandler(this.btnAgregarProvincia_Click);
             // 
             // FrmAbmAuto
             // 
@@ -703,5 +715,6 @@
         private System.Windows.Forms.ComboBox cmb_CodAnio;
         private System.Windows.Forms.Button btnAgregarAnio;
         private System.Windows.Forms.Button btnNuevoTipoUtilitario;
+        private System.Windows.Forms.Button btnAgregarProvincia;
     }
 }

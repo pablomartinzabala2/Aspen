@@ -310,5 +310,13 @@ namespace Concesionaria.Clases
             sql = sql + " order by m.Nombre,a.Anio desc";
             return cDb.ExecuteDataTable(sql);
         }
+
+        public void ActualizarPrecioCompra(Int32 CodStock, Double Importe)
+        {
+            string sql = "update stockauto ";
+            sql = sql + " set ImporteCompra=" + Importe.ToString().Replace(",", ".");
+            cDb.ExecutarNonQuery(sql);
+
+        }
     }
 }

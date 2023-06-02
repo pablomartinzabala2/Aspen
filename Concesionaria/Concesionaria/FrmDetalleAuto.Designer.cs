@@ -79,6 +79,8 @@
             this.chkEntrego = new System.Windows.Forms.CheckBox();
             this.Lista = new System.Windows.Forms.ListBox();
             this.BtnGraparPapel = new System.Windows.Forms.Button();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.GrillaProveedor = new System.Windows.Forms.DataGridView();
             this.txtAutoPartePago = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.txtExTitular = new System.Windows.Forms.TextBox();
@@ -99,8 +101,7 @@
             this.txtPatente = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.GrillaProveedor = new System.Windows.Forms.DataGridView();
+            this.btnGrabarCosto = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -118,6 +119,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnGrabarCosto);
             this.groupBox1.Controls.Add(this.txtCodAuto);
             this.groupBox1.Controls.Add(this.btnEditarAuto);
             this.groupBox1.Controls.Add(this.button1);
@@ -339,7 +341,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(381, 155);
+            this.label13.Location = new System.Drawing.Point(392, 155);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(56, 16);
             this.label13.TabIndex = 26;
@@ -636,6 +638,25 @@
             this.BtnGraparPapel.UseVisualStyleBackColor = true;
             this.BtnGraparPapel.Click += new System.EventHandler(this.BtnGraparPapel_Click);
             // 
+            // tabPage6
+            // 
+            this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.tabPage6.Controls.Add(this.GrillaProveedor);
+            this.tabPage6.Location = new System.Drawing.Point(4, 25);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Size = new System.Drawing.Size(764, 221);
+            this.tabPage6.TabIndex = 6;
+            this.tabPage6.Text = "Deuda Proveedor";
+            // 
+            // GrillaProveedor
+            // 
+            this.GrillaProveedor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GrillaProveedor.Location = new System.Drawing.Point(9, 15);
+            this.GrillaProveedor.Name = "GrillaProveedor";
+            this.GrillaProveedor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.GrillaProveedor.Size = new System.Drawing.Size(729, 166);
+            this.GrillaProveedor.TabIndex = 3;
+            // 
             // txtAutoPartePago
             // 
             this.txtAutoPartePago.Location = new System.Drawing.Point(97, 174);
@@ -683,15 +704,14 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(16, 149);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(53, 16);
+            this.label8.Size = new System.Drawing.Size(43, 16);
             this.label8.TabIndex = 14;
-            this.label8.Text = "Importe";
+            this.label8.Text = "Costo";
             // 
             // txtImporte
             // 
             this.txtImporte.Location = new System.Drawing.Point(97, 146);
             this.txtImporte.Name = "txtImporte";
-            this.txtImporte.ReadOnly = true;
             this.txtImporte.Size = new System.Drawing.Size(268, 22);
             this.txtImporte.TabIndex = 13;
             // 
@@ -806,24 +826,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Patente";
             // 
-            // tabPage6
+            // btnGrabarCosto
             // 
-            this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.tabPage6.Controls.Add(this.GrillaProveedor);
-            this.tabPage6.Location = new System.Drawing.Point(4, 25);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(764, 221);
-            this.tabPage6.TabIndex = 6;
-            this.tabPage6.Text = "Deuda Proveedor";
-            // 
-            // GrillaProveedor
-            // 
-            this.GrillaProveedor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GrillaProveedor.Location = new System.Drawing.Point(9, 15);
-            this.GrillaProveedor.Name = "GrillaProveedor";
-            this.GrillaProveedor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.GrillaProveedor.Size = new System.Drawing.Size(729, 166);
-            this.GrillaProveedor.TabIndex = 3;
+            this.btnGrabarCosto.Image = ((System.Drawing.Image)(resources.GetObject("btnGrabarCosto.Image")));
+            this.btnGrabarCosto.Location = new System.Drawing.Point(361, 143);
+            this.btnGrabarCosto.Name = "btnGrabarCosto";
+            this.btnGrabarCosto.Size = new System.Drawing.Size(40, 28);
+            this.btnGrabarCosto.TabIndex = 63;
+            this.btnGrabarCosto.UseVisualStyleBackColor = true;
+            this.btnGrabarCosto.Click += new System.EventHandler(this.btnGrabarCosto_Click);
             // 
             // FrmDetalleAuto
             // 
@@ -933,5 +944,6 @@
         private System.Windows.Forms.TextBox txtCodAuto;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.DataGridView GrillaProveedor;
+        private System.Windows.Forms.Button btnGrabarCosto;
     }
 }

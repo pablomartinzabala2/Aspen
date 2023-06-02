@@ -32,7 +32,7 @@ namespace Concesionaria
             string sql = "insert into " + Tabla;
             sql = sql + "(" + Nombre;
             sql = sql + ")";
-            sql = sql + "Values (" + "'" + txtNombre.Text.ToUpper () + "'";
+            sql = sql + "Values (" + "'" + txtNombre.Text + "'";
             sql = sql + ")";
             Clases.cDb.ExecutarNonQuery(sql);
             sql = "select max(" + Id.ToString() + ")";

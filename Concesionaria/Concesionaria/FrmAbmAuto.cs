@@ -212,7 +212,12 @@ namespace Concesionaria
                     case "tipoutilitario":
                         fun.LlenarCombo(cmb_CodTipoUtilitario, "TipoUtilitario", "Nombre", "CodTipo");
                         cmb_CodTipoUtilitario.SelectedValue = Principal.CampoIdSecundarioGenerado;
-                        break; 
+                        break;
+                    case "Provincia": 
+                        fun.LlenarCombo(cmbProvincia, "Provincia", "Nombre", "CodProvincia");
+                        cmbProvincia.SelectedValue = Principal.CampoIdSecundarioGenerado;
+                        cmb_CodCiudad.SelectedIndex = -1;
+                        break;
 
                 }
             }
@@ -613,6 +618,17 @@ namespace Concesionaria
             Principal.CampoIdSecundario = "CodTipo";
             Principal.CampoNombreSecundario = "Nombre";
             Principal.NombreTablaSecundario = "tipoutilitario";
+            FrmAltaBasica form = new FrmAltaBasica();
+            form.FormClosing += new FormClosingEventHandler(ContinuarCargaCombo);
+            form.ShowDialog();
+        }
+
+        private void btnAgregarProvincia_Click(object sender, EventArgs e)
+        {
+            Principal.CampoIdSecundario = "CodProvincia";
+            Principal.CampoNombreSecundario = "Nombre";
+            Principal.NombreTablaSecundario = "Provincia";
+            Principal.CampoIdSecundarioGenerado = "";
             FrmAltaBasica form = new FrmAltaBasica();
             form.FormClosing += new FormClosingEventHandler(ContinuarCargaCombo);
             form.ShowDialog();
