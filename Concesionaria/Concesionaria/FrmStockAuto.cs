@@ -187,6 +187,7 @@ namespace Concesionaria
             string Marca = "";
             string Patente = "";
             string Precio = "100.00";
+            Double Costo = 0;
             string Modelo = "";
             string Kilometros = "";
             string Combustible = "";
@@ -195,7 +196,9 @@ namespace Concesionaria
             string Color = "";
             string Anio = "";
             string sql = "";
-           
+
+            cStockAuto stock = new cStockAuto();
+            
             Clases.cFunciones fun = new Clases.cFunciones();
             Clases.cDb.ExecutarNonQuery("delete from ReporteAuto");
             for (int i = 0; i < Grilla.Rows.Count - 1; i++)
@@ -205,6 +208,7 @@ namespace Concesionaria
                 Precio = GetPrecioxCodStock(CodStock);
                 Kilometros = GetKilometrosxCodStock(CodStock);
                 Combustible = GetCombustiblexCodStock(CodStock);
+                Costo = stock.GetTotalCosto(CodStock);
                 if (Precio != "")
                 {
                     Precio = fun.SepararDecimales(Precio);
@@ -226,7 +230,7 @@ namespace Concesionaria
                 sql = sql + "," + "'" + Descripcion  +"'";
                 sql = sql + "," + "'" + Marca +"'";
                 sql = sql + "," + "'" + Modelo +"'";
-                sql = sql + "," + "'" + Precio +"'";
+                sql = sql + "," + "'" + fun.FormatoEnteroMiles(Costo.ToString()) +"'";
                 sql = sql + "," + "'" + Kilometros + "'";
                 sql = sql + "," + "'" + Combustible + "'";
                 sql = sql + "," + "'" + Anio + "'";

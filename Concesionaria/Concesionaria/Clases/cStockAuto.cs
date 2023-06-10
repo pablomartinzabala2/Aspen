@@ -318,5 +318,38 @@ namespace Concesionaria.Clases
             cDb.ExecutarNonQuery(sql);
 
         }
+
+        public Double GetTotalCosto(Int32 CodStock)
+        {
+            Double ImporteCompra = 0;
+            Double TotalCosto = 0;
+            Double Total = 0;
+            string sql = "select ImporteCompra from StockAuto";
+            sql = sql + " where CodStock=" + CodStock.ToString();
+            DataTable trdo = cDb.ExecuteDataTable(sql);
+            if (trdo.Rows.Count >0)
+            {
+                if (trdo.Rows[0]["ImporteCompra"].ToString ()!="")
+                {
+                    ImporteCompra = Convert.ToDouble(trdo.Rows[0]["ImporteCompra"].ToString());
+                }
+            }
+
+            sql = " select sum(isnull(importe,0)) as Total ";
+            sql = sql + " from costo ";
+            sql = sql + " where CodStock=" + CodStock.ToString();
+            DataTable trdo2 = cDb.ExecuteDataTable(sql);
+            if (trdo2.Rows.Count >0)
+            {
+                if (trdo2.Rows[0]["Total"].ToString ()!="")
+                {
+                    TotalCosto = Convert.ToDouble(trdo2.Rows[0]["Total"].ToString());
+                }
+            }
+
+            Total = ImporteCompra + TotalCosto;
+            return Total;
+
+        }
     }
 }
