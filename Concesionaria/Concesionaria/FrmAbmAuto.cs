@@ -457,7 +457,8 @@ namespace Concesionaria
                         cStockAuto stock = new cStockAuto();
 
                         Int32 CodAuto = auto.GetMaxCodAuto();
-                        stock.InsertarStockAuto(CodAuto, fecha.ToShortDateString(), null, Principal.CodUsuarioLogueado, null);
+                        if (ChkAltaStock.Checked == true)
+                            stock.InsertarStockAuto(CodAuto, fecha.ToShortDateString(), null, Principal.CodUsuarioLogueado, null);
                     }  
                 }
                 else

@@ -19,6 +19,7 @@ namespace Concesionaria
             
             if (Principal.CodigoPrincipalAbm != "")
             {
+                CargarProveedor();
                 txtCodStock.Text = Principal.CodigoPrincipalAbm.ToString();
                 CargarAuto(Convert.ToInt32(Principal.CodigoPrincipalAbm));
                 CargarCostoxstock(Convert.ToInt32(Principal.CodigoPrincipalAbm));
@@ -28,6 +29,7 @@ namespace Concesionaria
                 CargarDeudaProveedor(Convert.ToInt32(Principal.CodigoPrincipalAbm));
                 // GetEfectivoPagar(Convert.ToInt32(Principal.CodigoPrincipalAbm));
                 CargarPapeles();
+               
                 if (txtCodCompra.Text !="")
                 {
                     Int32 CodCompra = Convert.ToInt32(txtCodCompra.Text);
@@ -52,6 +54,11 @@ namespace Concesionaria
                 {
                     DateTime FechaIngreso = Convert.ToDateTime(trdoAuto.Rows[0]["FechaAlta"].ToString());
                     txtFechaIngreso.Text = FechaIngreso.ToShortDateString();
+                }
+                if (trdoAuto.Rows[0]["CodProveedor"].ToString()!="")
+                {
+                    Int32 CodProveedor = Convert.ToInt32(trdoAuto.Rows[0]["CodProveedor"]);
+                    cmbProveedor.SelectedValue = CodProveedor.ToString();
                 }
                 txtCodAuto.Text = trdoAuto.Rows[0]["CodAuto"].ToString();
                 txtPatente.Text = trdoAuto.Rows[0]["Patente"].ToString();
@@ -80,10 +87,16 @@ namespace Concesionaria
                     Clases.cFunciones fun = new Clases.cFunciones();
                     txtPrecioVenta.Text = fun.FormatoEnteroMiles(vec[0]);
                 }
-                txtExTitular.Text = trdoAuto.Rows[0]["ApeNom"].ToString();
+                //txtExTitular.Text = trdoAuto.Rows[0]["ApeNom"].ToString();
                 txtAutoPartePago.Text = trdoAuto.Rows[0]["DescripcionAutoPartePago"].ToString();
             }
 
+        }
+
+        private void CargarProveedor()
+        {
+            cFunciones fun = new cFunciones();
+            fun.LlenarCombo(cmbProveedor, "Proveedor", "Nombre", "CodProveedor");
         }
 
         public void CargarCostoxstock(Int32 CodStock)
@@ -97,6 +110,8 @@ namespace Concesionaria
 
             // Grilla.DefaultCellStyle.Font = new Font("Microsoft Sans Serif", 12);
             Grilla.Columns[0].Visible = false;
+
+
             Grilla.Columns[1].Visible = false;
             Grilla.Columns[2].Width = 420;
             Grilla.Columns[3].Width = 150;
@@ -531,6 +546,22 @@ namespace Concesionaria
             cStockAuto stock = new cStockAuto();
             stock.ActualizarPrecioCompra(CodStock, Importe);
             MessageBox.Show("Datos actualizados correctamente ");
+        }
+
+        private void btnGuardarProveedor_Click(object sender, EventArgs e)
+        {
+            if (cmbProveedor.SelectedIndex>0)
+            {
+                Int32 CodProveedor = Convert.ToInt32(cmbProveedor.SelectedValue);
+                Int32 COdStock = Convert.ToInt32(txtCodStock.Text);
+                cStockAuto stock = new cStockAuto();
+                stock.ActualizarProveedor(COdStock, CodProveedor);
+                MessageBox.Show("Datso grabados correctamente ");
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un elemento");
+            }
         }
     }
 }

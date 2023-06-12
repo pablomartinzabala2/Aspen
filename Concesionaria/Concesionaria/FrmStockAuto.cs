@@ -115,7 +115,7 @@ namespace Concesionaria
                 txtMontoTotal.Text = fun.FormatoEnteroMiles(txtMontoTotal.Text);
             }
 
-            fun.AnchoColumnas(Grilla, "0;8;10;28;8;10;8;8;10;0;10");
+            fun.AnchoColumnas(Grilla, "0;8;10;28;8;10;8;0;0;0;10;18");
              
         }
 

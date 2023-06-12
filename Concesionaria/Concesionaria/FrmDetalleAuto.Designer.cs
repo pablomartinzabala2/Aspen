@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDetalleAuto));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnGrabarCosto = new System.Windows.Forms.Button();
             this.txtCodAuto = new System.Windows.Forms.TextBox();
             this.btnEditarAuto = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -83,7 +84,6 @@
             this.GrillaProveedor = new System.Windows.Forms.DataGridView();
             this.txtAutoPartePago = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.txtExTitular = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtMotor = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -101,7 +101,8 @@
             this.txtPatente = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnGrabarCosto = new System.Windows.Forms.Button();
+            this.cmbProveedor = new System.Windows.Forms.ComboBox();
+            this.btnGuardarProveedor = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -119,6 +120,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnGuardarProveedor);
+            this.groupBox1.Controls.Add(this.cmbProveedor);
             this.groupBox1.Controls.Add(this.btnGrabarCosto);
             this.groupBox1.Controls.Add(this.txtCodAuto);
             this.groupBox1.Controls.Add(this.btnEditarAuto);
@@ -144,7 +147,6 @@
             this.groupBox1.Controls.Add(this.tabControl1);
             this.groupBox1.Controls.Add(this.txtAutoPartePago);
             this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.txtExTitular);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.txtMotor);
             this.groupBox1.Controls.Add(this.label8);
@@ -169,6 +171,16 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Detalle vehículo";
+            // 
+            // btnGrabarCosto
+            // 
+            this.btnGrabarCosto.Image = ((System.Drawing.Image)(resources.GetObject("btnGrabarCosto.Image")));
+            this.btnGrabarCosto.Location = new System.Drawing.Point(325, 143);
+            this.btnGrabarCosto.Name = "btnGrabarCosto";
+            this.btnGrabarCosto.Size = new System.Drawing.Size(40, 28);
+            this.btnGrabarCosto.TabIndex = 63;
+            this.btnGrabarCosto.UseVisualStyleBackColor = true;
+            this.btnGrabarCosto.Click += new System.EventHandler(this.btnGrabarCosto_Click);
             // 
             // txtCodAuto
             // 
@@ -674,22 +686,14 @@
             this.label12.TabIndex = 22;
             this.label12.Text = "Parte Pago";
             // 
-            // txtExTitular
-            // 
-            this.txtExTitular.Location = new System.Drawing.Point(454, 124);
-            this.txtExTitular.Name = "txtExTitular";
-            this.txtExTitular.ReadOnly = true;
-            this.txtExTitular.Size = new System.Drawing.Size(293, 22);
-            this.txtExTitular.TabIndex = 17;
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(380, 124);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(57, 16);
+            this.label9.Size = new System.Drawing.Size(72, 16);
             this.label9.TabIndex = 16;
-            this.label9.Text = "Ex titular";
+            this.label9.Text = "Proveedor";
             // 
             // txtMotor
             // 
@@ -712,7 +716,7 @@
             // 
             this.txtImporte.Location = new System.Drawing.Point(97, 146);
             this.txtImporte.Name = "txtImporte";
-            this.txtImporte.Size = new System.Drawing.Size(268, 22);
+            this.txtImporte.Size = new System.Drawing.Size(228, 22);
             this.txtImporte.TabIndex = 13;
             // 
             // label7
@@ -826,15 +830,24 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Patente";
             // 
-            // btnGrabarCosto
+            // cmbProveedor
             // 
-            this.btnGrabarCosto.Image = ((System.Drawing.Image)(resources.GetObject("btnGrabarCosto.Image")));
-            this.btnGrabarCosto.Location = new System.Drawing.Point(361, 143);
-            this.btnGrabarCosto.Name = "btnGrabarCosto";
-            this.btnGrabarCosto.Size = new System.Drawing.Size(40, 28);
-            this.btnGrabarCosto.TabIndex = 63;
-            this.btnGrabarCosto.UseVisualStyleBackColor = true;
-            this.btnGrabarCosto.Click += new System.EventHandler(this.btnGrabarCosto_Click);
+            this.cmbProveedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbProveedor.FormattingEnabled = true;
+            this.cmbProveedor.Location = new System.Drawing.Point(458, 124);
+            this.cmbProveedor.Name = "cmbProveedor";
+            this.cmbProveedor.Size = new System.Drawing.Size(246, 24);
+            this.cmbProveedor.TabIndex = 64;
+            // 
+            // btnGuardarProveedor
+            // 
+            this.btnGuardarProveedor.Image = ((System.Drawing.Image)(resources.GetObject("btnGuardarProveedor.Image")));
+            this.btnGuardarProveedor.Location = new System.Drawing.Point(710, 121);
+            this.btnGuardarProveedor.Name = "btnGuardarProveedor";
+            this.btnGuardarProveedor.Size = new System.Drawing.Size(40, 28);
+            this.btnGuardarProveedor.TabIndex = 65;
+            this.btnGuardarProveedor.UseVisualStyleBackColor = true;
+            this.btnGuardarProveedor.Click += new System.EventHandler(this.btnGuardarProveedor_Click);
             // 
             // FrmDetalleAuto
             // 
@@ -889,7 +902,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtMotor;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtExTitular;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtTotal;
         private System.Windows.Forms.Label label10;
@@ -945,5 +957,7 @@
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.DataGridView GrillaProveedor;
         private System.Windows.Forms.Button btnGrabarCosto;
+        private System.Windows.Forms.Button btnGuardarProveedor;
+        private System.Windows.Forms.ComboBox cmbProveedor;
     }
 }

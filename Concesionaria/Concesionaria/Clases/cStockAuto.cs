@@ -85,6 +85,7 @@ namespace Concesionaria.Clases
             sql = sql + ") as Costo";
             */
             sql = sql + ",sa.PrecioVenta";
+            sql = sql + ",(select pro.Nombre from Proveedor pro where pro.CodProveedor=sa.CodProveedor) as Proveedor ";
             
             sql = sql + " from auto a, StockAuto sa,marca m";
             sql = sql + " where a.Codauto =sa.CodAuto ";
@@ -315,9 +316,11 @@ namespace Concesionaria.Clases
         {
             string sql = "update stockauto ";
             sql = sql + " set ImporteCompra=" + Importe.ToString().Replace(",", ".");
+            sql = sql + " where CodStock=" + CodStock.ToString();
             cDb.ExecutarNonQuery(sql);
 
         }
+
 
         public Double GetTotalCosto(Int32 CodStock)
         {
@@ -350,6 +353,14 @@ namespace Concesionaria.Clases
             Total = ImporteCompra + TotalCosto;
             return Total;
 
+        }
+
+        public void ActualizarProveedor(Int32 CodStock, Int32 CodProveedor)
+        {
+            string sql = "update stockauto ";
+            sql = sql + " set CodProveedor=" + CodProveedor.ToString();
+            sql = sql + " where CodStock =" + CodStock.ToString();
+            cDb.ExecutarNonQuery(sql);
         }
     }
 }
